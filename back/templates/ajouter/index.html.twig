@@ -2,10 +2,15 @@
 
 {% block title %}Ajouter index{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     <h1>Ajouter index</h1>
 
-    <table class="table">
+    <table class="table" id="myTable">
         <thead>
             <tr>
                 <th>Id</th>
@@ -21,17 +26,13 @@
                 <td>{{ ajouter.qte }}</td>
                 <td>{{ ajouter.date ? ajouter.date|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_ajouter_show', {'id': ajouter.id}) }}">show</a>
-                    <a href="{{ path('app_ajouter_edit', {'id': ajouter.id}) }}">edit</a>
+                    <a href="{{ path('app_ajouter_show', {'id': ajouter.id}) }}" class="btn btn-info">show</a>
+                    <a href="{{ path('app_ajouter_edit', {'id': ajouter.id}) }}" class="btn btn-warning">edit</a>
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_ajouter_new') }}">Create new</a>
+    <a href="{{ path('app_ajouter_new') }}" class="btn btn-primary">Créer un nouveau</a>
 {% endblock %}

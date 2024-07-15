@@ -2,10 +2,15 @@
 
 {% block title %}Produit index{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     <h1>Produit index</h1>
 
-    <table class="table">
+    <table class="table" id="myTable">
         <thead>
             <tr>
                 <th>Id</th>
@@ -33,17 +38,13 @@
                 <td>{{ produit.arriver ? produit.arriver|date('Y-m-d') : '' }}</td>
                 <td>{{ produit.prioriter }}</td>
                 <td>
-                    <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
+                    <a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn btn-info">show</a>
+                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-warning">edit</a>
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_produit_new') }}">Create new</a>
+    <a href="{{ path('app_produit_new') }}" class="btn btn-primary">Créer un nouveau</a>
 {% endblock %}

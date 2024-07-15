@@ -2,10 +2,15 @@
 
 {% block title %}Adresse index{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     <h1>Adresse index</h1>
 
-    <table class="table">
+    <table class="table" id="myTable">
         <thead>
             <tr>
                 <th>Id</th>
@@ -27,17 +32,13 @@
                 <td>{{ adresse.codePostal }}</td>
                 <td>{{ adresse.pays }}</td>
                 <td>
-                    <a href="{{ path('app_adresse_show', {'id': adresse.id}) }}">show</a>
-                    <a href="{{ path('app_adresse_edit', {'id': adresse.id}) }}">edit</a>
+                    <a href="{{ path('app_adresse_show', {'id': adresse.id}) }}" class="btn btn-info">show</a>
+                    <a href="{{ path('app_adresse_edit', {'id': adresse.id}) }}" class="btn btn-warning">edit</a>
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_adresse_new') }}">Create new</a>
+    <a href="{{ path('app_adresse_new') }}" class="btn btn-primary">Créer un nouveau</a>
 {% endblock %}
