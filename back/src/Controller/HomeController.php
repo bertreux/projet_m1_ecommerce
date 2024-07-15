@@ -10,6 +10,6 @@ class HomeController extends BackAbstractController
     #[Route('/', name: 'homepage')]
     public function home(): Response
     {
-        return $this->render('menu/index.html.twig', []);
+        return $this->redirectToRoute('app_adresse_index');
     }
 }
