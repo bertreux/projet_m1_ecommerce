@@ -2,6 +2,7 @@
 
 namespace App\Front\Repository;
 
+use App\Front\Entity\Categorie;
 use App\Front\Entity\Produit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,6 +38,39 @@ class ProduitRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findAllCarousel(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->setMaxResults(3)
+            ->andWhere('p.carousel = :val')
+            ->setParameter('val', true)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findProductByCategorie(?Categorie $categorie)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.categorie = :val')
+            ->setParameter('val', $categorie)
+            ->orderBy('p.prioriter', 'ASC')
+            ->addOrderBy('p.stock','DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findProductByHighlander()
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.highlander = :val')
+            ->setParameter('val', 1)
+            ->orderBy('p.prioriter', 'ASC')
+            ->addOrderBy('p.stock','DESC')
+            ->getQuery()
+            ->getResult();
     }
 
 }

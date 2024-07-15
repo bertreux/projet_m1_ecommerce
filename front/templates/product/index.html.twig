@@ -18,14 +18,6 @@
                 <p>STOCK ÉPUISÉ</p>
             {% endif %}
             <br>
-            Matérieux : <br>
-            <ul>
-                {% for comp in compose %}
-                    <li>
-                        {{ comp.materiaux.nom }}
-                    </li>
-                {% endfor %}
-            </ul>
             {% if product.stock > 0 %}
                 {{ form_start(formStock) }}
                 {{ form_widget(formStock.nombre) }}

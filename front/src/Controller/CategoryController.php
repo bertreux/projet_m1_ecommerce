@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace App\Front\Controller;
 
-use App\Entity\Categorie;
-use App\Form\SearchType;
+use App\Front\Entity\Categorie;
+use App\Front\Form\SearchType;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,20 +28,6 @@ class CategoryController extends FrontAbstractController
             $i=0;
             $where = " WHERE";
             $sql="SELECT DISTINCT produit.* FROM produit";
-            if(isset($data['materiaux'][0])){
-                $liste = "(";
-                $i=0;
-                while(isset($data['materiaux'][$i])){
-                    $liste.=$data['materiaux'][$i]->getId();
-                    if(isset($data['materiaux'][$i+1])){
-                        $liste.=",";
-                    }
-                    $i++;
-                }
-                $liste.=")";
-                $sql.=" INNER JOIN compose ON produit.id = compose.produit_id".$where." materiaux_id IN ".$liste;
-                $where = " AND";
-            }
             if($data['prix_min'] != null){
                 $sql.=$where." prix >= ".$data['prix_min'];
                 $where = " AND";
@@ -105,21 +91,12 @@ class CategoryController extends FrontAbstractController
     {
 
         $session = $request->getSession();
-        $materiaux = [];
-        $i=0;
-        if(isset($session->get('search')['materiaux'])){
-            while(isset($session->get('search')['materiaux'][$i])){
-                $materiaux[$i] = $this->materiauxRepository->find($session->get('search')['materiaux'][$i]->getId());
-                $i++;
-            }
-        }
 
         $categorie = $this->categorieRepository->find($request->attributes->get('id'));
 
         $form = $this->createForm(SearchType::class, null, [
             'isCategory' => false,
-            'options' => $session->get('search'),
-            'listMateriaux' => $materiaux,
+            'options' => $session->get('search')
         ]);
         $form->handleRequest($request);
 
@@ -130,8 +107,7 @@ class CategoryController extends FrontAbstractController
             $product = $this->produitRepository->findProductByCategorie($categorie);
             $form = $this->createForm(SearchType::class,null,[
                 'isCategory' => true,
-                'options' => $session->get('search'),
-                'listMateriaux' => $materiaux,
+                'options' => $session->get('search')
             ]);
         }
 

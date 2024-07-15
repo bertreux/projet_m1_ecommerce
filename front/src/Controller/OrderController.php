@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller;
+namespace App\Front\Controller;
 
-use App\Entity\Adresse;
-use App\Entity\Ajouter;
-use App\Entity\Commande;
-use App\Form\DeliveryFormType;
-use App\Form\LivraisonFormType;
-use App\Form\OrderType;
+use App\Front\Entity\Adresse;
+use App\Front\Entity\Ajouter;
+use App\Front\Entity\Commande;
+use App\Front\Form\DeliveryFormType;
+use App\Front\Form\LivraisonFormType;
+use App\Front\Form\OrderType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

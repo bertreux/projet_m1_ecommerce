@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Controller;
+namespace App\Front\Controller;
 
-use App\Repository\MailRepository;
-use App\Service\CartService;
+use App\Front\Repository\MailRepository;
+use App\Front\Service\CartService;
 use Doctrine\DBAL\Connection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\AdresseRepository;
-use App\Repository\AjouterRepository;
-use App\Repository\CategorieRepository;
-use App\Repository\CommandeRepository;
-use App\Repository\ComposeRepository;
-use App\Repository\ImageRepository;
-use App\Repository\MateriauxRepository;
-use App\Repository\ProduitRepository;
-use App\Repository\UtilisateurRepository;
+use App\Front\Repository\AdresseRepository;
+use App\Front\Repository\AjouterRepository;
+use App\Front\Repository\CategorieRepository;
+use App\Front\Repository\CommandeRepository;
+use App\Front\Repository\ImageRepository;
+use App\Front\Repository\ProduitRepository;
+use App\Front\Repository\UtilisateurRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,28 +22,22 @@ class FrontAbstractController extends AbstractController
     protected $categorieRepository;
     protected $commandeRepository;
     protected $imageRepository;
-    protected $materiauxRepository;
-    protected $produitRepository;
     protected $utilisateurRepository;
     protected $ajouterRepository;
-    protected $composeRepository;
     protected $mailRepository;
 
     public function __construct(AdresseRepository $adresseRepository, CommandeRepository $commandeRepository,
                                 ImageRepository $imageRepository, CategorieRepository $categorieRepository,
-                                MateriauxRepository $materiauxRepository, ProduitRepository $produitRepository,
-                                UtilisateurRepository $utilisateurRepository, AjouterRepository $ajouterRepository,
-                                ComposeRepository $composeRepository, MailRepository $mailRepository)
+                                ProduitRepository $produitRepository, UtilisateurRepository $utilisateurRepository,
+                                AjouterRepository $ajouterRepository, MailRepository $mailRepository)
     {
         $this->adresseRepository = $adresseRepository;
         $this->commandeRepository = $commandeRepository;
         $this->imageRepository = $imageRepository;
         $this->categorieRepository = $categorieRepository;
-        $this->materiauxRepository = $materiauxRepository;
         $this->produitRepository = $produitRepository;
         $this->utilisateurRepository = $utilisateurRepository;
         $this->ajouterRepository = $ajouterRepository;
-        $this->composeRepository = $composeRepository;
         $this->mailRepository = $mailRepository;
     }
 

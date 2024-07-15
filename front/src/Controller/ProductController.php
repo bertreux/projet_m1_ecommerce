@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Front\Controller;
 
-use App\Service\CartService;
+use App\Front\Service\CartService;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Form;
+namespace App\Front\Form;
 
-use App\Entity\Categorie;
-use App\Entity\Materiaux;
+use App\Front\Entity\Categorie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -12,8 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SearchType extends AbstractType
@@ -52,12 +49,6 @@ class SearchType extends AbstractType
                     ]);
             }
             $builder
-                ->add('materiaux', EntityType::class,[
-                    'class' => Materiaux::class,
-                    'multiple' => true,
-                    'expanded' => true,
-                    'required' => false,
-                ])
                 ->add('prix_min', NumberType::class,[
                     'required' => false,
                 ])
@@ -119,13 +110,6 @@ class SearchType extends AbstractType
                         ]);
             }
             $builder
-                ->add('materiaux', EntityType::class,[
-                    'class' => Materiaux::class,
-                    'multiple' => true,
-                    'expanded' => true,
-                    'required' => false,
-                    'data' => $options['listMateriaux'],
-                ])
                 ->add('prix_min', NumberType::class,[
                     'required' => false,
                     'data' => $options['options']['prix_min'],
@@ -171,7 +155,6 @@ class SearchType extends AbstractType
         $resolver->setDefaults([
             'isCategory' => false,
             'options' => null,
-            'listMateriaux' => null,
             'categori' => null
         ]);
     }
