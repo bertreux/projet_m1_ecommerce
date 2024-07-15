@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace App\Front\Controller;
 
-use App\Entity\Product;
-use App\Service\CartService;
+use App\Front\Entity\Product;
+use App\Front\Service\CartService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

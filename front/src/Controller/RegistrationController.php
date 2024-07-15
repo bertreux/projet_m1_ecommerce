@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Controller;
+namespace App\Front\Controller;
 
-use App\Entity\Adresse;
-use App\Entity\Produit;
-use App\Entity\Utilisateur;
-use App\Form\ChangeMdpType;
-use App\Form\ProfilType;
-use App\Form\RegistrationFormType;
-use App\Service\MailerService;
+use App\Front\Entity\Adresse;
+use App\Front\Entity\Produit;
+use App\Front\Entity\Utilisateur;
+use App\Front\Form\ChangeMdpType;
+use App\Front\Form\ProfilType;
+use App\Front\Form\RegistrationFormType;
+use App\Front\Service\MailerService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;

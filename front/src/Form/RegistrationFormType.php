@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Form;
+namespace App\Front\Form;
 
-use App\Entity\Produit;
-use App\Entity\Utilisateur;
+use App\Front\Entity\Produit;
+use App\Front\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;

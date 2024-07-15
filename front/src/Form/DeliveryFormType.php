@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Form;
+namespace App\Front\Form;
 
-use App\Entity\Adresse;
-use App\Entity\Utilisateur;
+use App\Front\Entity\Adresse;
+use App\Front\Entity\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

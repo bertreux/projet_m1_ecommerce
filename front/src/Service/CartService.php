@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Service;
+namespace App\Front\Service;
 
-use App\Entity\Product;
-use App\Repository\ProduitRepository;
+use App\Front\Entity\Product;
+use App\Front\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
