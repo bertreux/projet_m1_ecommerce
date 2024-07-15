@@ -1,0 +1,138 @@
+.noLink {
+    color: white;
+    text-decoration: none;
+}
+
+.noLinkOrder {
+    text-decoration: none;
+}
+
+.container {
+    position: relative;
+}
+
+#menuButton {
+    margin-top: 20px;
+}
+
+#menu {
+    margin-top: 58px;
+    position: absolute;
+    top: 0;
+    right: -200px;
+    width: 450px;
+    background-color: #796f6f;
+    transition: right 0.3s ease-in-out;
+    z-index: 2000;
+}
+
+#menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#menu li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.hidden {
+    display: none;
+}
+
+.search {
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+#search_materiaux_4, #search_materiaux_5, #search_materiaux_6 {
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+#search_prix_min, #search_prix_max {
+    width: 50px;
+}
+
+#search_description, #search_titre {
+    margin-top: 5px;
+    width: 400px;
+}
+
+#search_submitSearch {
+    margin-left: 100px;
+    margin-bottom: 20px;
+}
+
+.displayProduit {
+    display: inline-flex;
+}
+
+.carouselProduit {
+    margin-left: 100px;
+    overflow: hidden;
+}
+
+#contact_form_objet {
+    width: 700px;
+    margin-right: 50px;
+}
+
+#contact_form_mail {
+    width: 700px;
+    height: 500px;
+    margin-left: 50px;
+}
+
+.mail {
+    margin-top: 20px;
+}
+
+.imageCarousel {
+    height: 300px;
+}
+
+.imageCart {
+    height: 300px;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin-bottom: 60px;
+}
+
+#footerSite {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.alert {
+    background: wheat;
+}
+
+.notification {
+    position: relative;
+}
+
+.notification-badge {
+    background-color: red;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 20px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
