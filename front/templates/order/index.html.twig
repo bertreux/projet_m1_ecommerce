@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order{% endblock %}
+
+{% block content %}
+    {{ form_start(formOrder) }}
+<div class="d-name d-lg-block bg-secondary position-fixed top-0 start-0 h-100" style="width: 52.5%; "></div>
+<div class="container position-relative zindex-2 pt-5 pb-lg-5 pb-md-4 pb-2">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1 class="h2 pb-2">Création de la commande</h1>
+            <h3 class="fs-base fw-normal text-body text-uppercase  pb-1 pb-sm-1">1.
+                <span class="text-decoration-underline ms-1">Choisir votre livraison</span></h3>
+                {% if utilisateur and adresse is not null %}
+                    <strong>Adresse de l'utilisateur : </strong>{{ adresse.intitule }} {{ adresse.codePostal }} {{ adresse.ville }} {{ adresse.pays }} {{ adresse.region }}
+                    <br><br><a href="{{ path('app_info_profil') }}" class="btn btn-info">Changer d'adresse</a>
+                {% else %}
+                    <p>Entrez votre adresse si elle n'est pas déjà enregistrée
+                    </p>
+                    Adresse : {{ form_widget(formOrder.adresse.intitule) }}<br>
+                    Ville : {{ form_widget(formOrder.adresse.ville) }}
+                    Région : {{ form_widget(formOrder.adresse.region) }}<br>
+                    Code postal : {{ form_widget(formOrder.adresse.code_postal) }}
+                    Pays : {{ form_widget(formOrder.adresse.pays) }}<br>
+                {% endif %}
+                <h3 class="fs-base fw-normal text-body text-uppercase mt-n4 mt-md-n3 pt-5 pb-2 pb-ms-3">2. <span
+                            class="text-decoration-underline ms-1">Information personnel</span></h3>
+                Nom : {{ utilisateur.nom }}<br>
+                Prenom : {{ utilisateur.prenom }}<br>
+                Mail : {{ utilisateur.userIdentifier }}
+            <h3 class="fs-base fw-normal text-body text-uppercase mt-n4 mt-md-n3 pt-5 pb-2 pb-ms-3">3. <span
+                        class="text-decoration-underline ms-1">Paiement</span></h3>
+            Numéro de carte : {{ form_widget(formOrder.cb_numero) }}<br>
+            Date d'éxpiration de la carte : {{ form_widget(formOrder.cb_date) }}<br>
+            Code de la carte : {{ form_widget(formOrder.cb_code) }}<br>
+            {{ form_widget(formOrder.submit) }}
+            {{ form_end(formOrder) }}
+        </div>
+        <div class="col-lg-5 offset-lg-1 pt-1">
+            <h2 class="pb-2 pt-md-2 my-4 mt-lg-5">Récapitulatif de votre commande<br><span
+                        class="fs-base fw-normal text-muted">({{ recapCart|length }}  produits)</span></h2>
+            {% set total = null %}
+            {% for item in recapCart %}
+                {% set total = total + (item.product.prix * item.quantity) %}
+                <div class="d-sm-flex align-items-center border-top py-4">
+                    <a class="d-inline-block flex-shrink-0 bg-secondary rounded-1 p-sm-2 p-xl-3 mb-2 mb-sm-0" href="">
+                        {% if item.product.images[0].url is defined %}
+                            {% for img in item.product.images  %}
+                                 {% if img.principal == 1 %}
+                                    <img src="{{ asset(img.url) }}" width="80" height="80" alt="{{ item.product.nom }}"></a>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <div class="w-100 pt-1 ps-sm-4">
+                            <div class="d-block">
+                                <div class="me-3" style="position: relative; top: 15px;">
+                                    <h3 class="h5 mb-2"><a href="{{ path('shop_index',{id: item.product.id}) }}">{{ item.product.nom }}</a></h3>
+                                    <p>{{ item.product.description }}</p>
+                                </div>
+                                <div>
+                                    <p class="mb-2">Quantité : x{{ item.quantity }} - Prix du
+                                        produit: {{ (item.product.prix /100)|number_format(2, ',', '.') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}
