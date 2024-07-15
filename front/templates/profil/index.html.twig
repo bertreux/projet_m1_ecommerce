@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+
+<style>
+    .form-container {
+      width: 60%;
+      margin: 0 auto;
+      background: #f6f6f6;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      font-weight: bold;
+      display: block;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    
+    .form-group button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  
+    .form-group button:hover {
+      background-color: #0056b3;
+    }
+    
+    a.btn-info {
+      background-color: #17a2b8;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    
+    a.btn-info:hover {
+      background-color: #138496;
+    }
+  </style>
+  {{ form_start(formProfil) }}
+  <div class="form-container">
+    <h1>Information de l'utilisateur</h1>
+    <form method="post">
+      <div class="form-group">
+        <label>Nom :</label>
+        {{ form_widget(formProfil.nom) }}
+      </div>
+      <div class="form-group">
+        <label>Prenom :</label>
+        {{ form_widget(formProfil.prenom) }}
+      </div>
+      <div class="form-group">
+        <label>Tel :</label>
+        {{ form_widget(formProfil.tel) }}
+      </div>
+      <hr>
+      <h1>Adresse de l'utilisateur</h1>
+      <div class="form-group">
+        {{ form_widget(formProfil.adresse) }}
+      </div>
+      <hr>
+      <div class="form-group">
+        {{ form_widget(formProfil.submit) }}
+      </div>
+    </form>
+      {{ form_end(formProfil) }}
+    <hr>
+    <a href="{{ path('app_mdp_profil') }}" class="btn btn-info">Modifier le mot de passe</a>
+  </div>
+  
+
+{% endblock %}

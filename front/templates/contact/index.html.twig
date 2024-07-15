@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+    {{ form_start(formContact) }}
+    <h2>Contact</h2>
+    {% if user != null %}
+    Objet : {{ form_widget(formContact.objet) }}
+    {{ form_widget(formContact.submitMail) }}<br>
+    <div class="mail">
+        Mail : <br>{{ form_widget(formContact.mail) }}
+        {{ form_end(formContact) }}
+    </div>
+    {% else %}
+    Veuillez vous connecter avant de pouvoir nous contacter
+    {% endif %}
+    <hr>
+    <h2>CGU</h2>
+    Date d'entrée en vigueur : 15/07/2024<br><br>
+    Bienvenue sur notre site d'e-commerce de Beyblades ! Avant de procéder à tout achat, veuillez lire attentivement les présentes Conditions Générales d'Utilisation (ci-après dénommées "CGU"). En utilisant ce site, vous acceptez pleinement et sans réserve ces CGU qui régissent votre accès et votre utilisation de notre plateforme en ligne. Si vous n'acceptez pas ces CGU, veuillez ne pas continuer à utiliser ce site.<br><br>
+    Acceptation des CGU<br>
+    En utilisant ce site, vous reconnaissez avoir lu, compris et accepté les présentes CGU dans leur intégralité. Vous vous engagez à respecter toutes les dispositions énoncées ici. Les CGU peuvent être mises à jour de temps à autre, et votre utilisation continue du site après une telle mise à jour constituera votre acceptation des nouvelles CGU.<br><br>
+    Utilisation du site<br>
+    Les présentes Conditions Générales d'Utilisation (CGU) régissent l'accès et l'utilisation de notre site de vente de Beyblades.
+    En accédant au site, les utilisateurs acceptent ces conditions, qui couvrent la description des produits, les processus de commande, de paiement et de livraison, ainsi que les droits de rétractation et de retour des clients.
+    Les prix sont indiqués en euros, toutes taxes comprises, avec des frais de livraison supplémentaires.
+    Les produits bénéficient de garanties légales, et notre responsabilité est limitée au montant de la commande.
+    Les contenus du site sont protégés par les lois sur la propriété intellectuelle.
+    Nous nous engageons à protéger les données personnelles des utilisateurs conformément à notre politique de confidentialité.
+    Les CGU peuvent être modifiées à tout moment, et les utilisateurs doivent consulter régulièrement les mises à jour.
+    En cas de litige, les tribunaux français sont seuls compétents. Pour toute question, veuillez nous contacter à l'adresse e-mail de contact indiquée sur le site.
+    <hr>
+    <h2>Mention légale</h2>
+    Identification du site :<br>
+    Shopy<br>
+    http://127.0.0.1:8000/<br><br>
+    Développeurs de la publication :<br>
+    VERSTRAETE Lucas<br><br>
+    Collecte de données personnelles :<br>
+    Les données collécter par ce site internet reste sur ce site et ne sont jamais utilisé autre part.<br><br>
+    Liens externes :<br>
+    Notre site peut contenir des liens vers des sites externes. Nous déclinons toute responsabilité quant au contenu ou aux pratiques de confidentialité de ces sites tiers.<br><br>
+    Ces mentions légales constituent l'intégralité des informations relatives à notre site. Si vous avez des questions ou des préoccupations concernant ces mentions légales, veuillez nous contacter à l'adresse e-mail indiquée ci-dessus.<br><br>
+    Dernière mise à jour des mentions légales : 15/07/2024
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category{% endblock %}
+
+{% block content %}
+    <h5 class="mt-2">Categorie : {{ categorie.nom }}</h5><hr>
+    <div class="row">
+        <h1>Les produits</h1>
+        {% for produits in products %}
+            <article class="col-4 mb-4">
+                <div class="card">
+                    <h2 class="card-header">
+                        {{ produits.nom }}
+                    </h2>
+                    <div class="card-img article_contenu">
+                        {% if produits.images[0].url is defined %}
+                            {% for img in produits.images  %}
+                                {% if img.principal == 1 %}
+                                    <img class="imageCart" src="{{ asset(img.url) }}"/>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="card-body article_contenu">
+                        {{ produits.description }}
+                        <hr>
+                        {% if produits.stock > 0 %}
+                            Stock : {{ produits.stock }} produit(s)
+                        {% else %}
+                            STOCK ÉPUISÉ
+                        {% endif %}
+                    </div>
+                    <footer class="card-footer d-flex justify-content-between">
+                        <a href="{{ path('shop_index', {'id': produits.id}) }}">Cliquer ici pour voir le produit</a>
+                        <h5 class="mt-2">{{ produits.prix }} €</h5>
+                    </footer>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+{% endblock %}

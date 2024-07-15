@@ -1,0 +1,10 @@
+<h1>Confirmation de votre compte utilisateur</h1>
+<p>
+    Bonjour, {{ user.username }} et bienvenue sur notre site.<br><br>
+    Veuillez confirmer votre compte dès maintenant en cliquant sur le lien ci-dessous:<br><br>
+   {# Ce lien est valable jusqu'au <strong>{{ lifeTimeToken }}</strong>. Après cette date, il ne sera plus valable.<br><br> #}
+    Ce lien est valable jusqu'au . Après cette date, il ne sera plus valable.<br><br>
+    <a href="{{ absolute_url(path('account_verify', {token: token, id: user.id})) }}"> Vérifier mon compte</a><br><br>
+    <strong>Ceci est un email automatique, merci de ne pas y répondre</strong><br><br>
+    A bientôt sur notre site !
+</p>

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block content %}
+<style>
+    .order-container {
+      width: 60%;
+      margin: 0 auto;
+      background: #f6f6f6;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+    }
+  
+    .order-container h1, .order-container h3 {
+      text-align: center;
+      color: #333;
+    }
+  
+    .order-container a {
+      display: block;
+      background-color: #e1f5fe;
+      color: #000;
+      padding: 15px;
+      text-decoration: none;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+  
+    .order-container a:hover {
+      background-color: #b3e5fc;
+    }
+  </style>
+  
+  <div class="order-container">
+    <h1>Mes commandes</h1>
+    <hr>
+    {% set dateCommmande = null %}
+    {% if commandes|length > 0 %}
+        {% for commande in commandes %}
+            {% if dateCommmande != commande.ajouters[0].date|date('Y')  %}
+                {% set dateCommmande = commande.ajouters[0].date|date('Y') %}
+                <h3>{{ commande.ajouters[0].date|date('Y') }}</h3>
+                <hr>
+            {% endif %}
+            <a class="noLinkOrder" href="{{ path('see_order_livraison', {id: commande.id}) }}">
+                Commande du {{ commande.ajouters[0].date|date('Y-m-d') }}<br>
+                {% set productTot = 0 %}
+                {% set prix = 0 %}
+                {% for product in commande.ajouters %}
+                    {% set productTot = productTot + product.qte %}
+                    {% set prix = prix + product.produit.prix * product.qte %}
+                {% endfor %}
+                Statut de la commande : {{ commande.statut }}<br>
+                Couts total : {{ prix }} €<br>
+                Produits totaux : {{ productTot }}
+            </a>
+            <hr>
+            
+  
+        {% endfor %}
+    {% else %}
+        Vous n'avez pas de commande
+    {% endif %}
+
+{% endblock %}
