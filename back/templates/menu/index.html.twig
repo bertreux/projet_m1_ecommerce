@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BackOffice{% endblock %}
+
+{% block body %}
+    <a href="{{ path('app_mail_index') }}">Mail</a><br>
+    <a href="{{ path('app_adresse_index') }}">Adresse</a><br>
+    <a href="{{ path('app_categorie_index') }}">Catégorie</a><br>
+    <a href="{{ path('app_commande_index') }}">Commande</a><br>
+    <a href="{{ path('app_image_index') }}">Image</a><br>
+    <a href="{{ path('app_produit_index') }}">Produit</a><br>
+    <a href="{{ path('app_utilisateur_index') }}">Utilisateur</a><br>
+    <a href="{{ path('app_ajouter_index') }}">Ajouter</a><br>
+{% endblock %}

@@ -12,26 +12,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/ajouter')]
-class AjouterController extends AbstractController
+class AjouterController extends BackAbstractController
 {
     #[Route('/', name: 'app_ajouter_index', methods: ['GET'])]
-    public function index(AjouterRepository $ajouterRepository): Response
+    public function index(): Response
     {
         return $this->render('ajouter/index.html.twig', [
-            'ajouters' => $ajouterRepository->findAll(),
+            'ajouters' => $this->ajouterRepository->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'app_ajouter_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request): Response
     {
         $ajouter = new Ajouter();
         $form = $this->createForm(AjouterType::class, $ajouter);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($ajouter);
-            $entityManager->flush();
+            $this->entityManager->persist($ajouter);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('app_ajouter_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -51,13 +51,13 @@ class AjouterController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_ajouter_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Ajouter $ajouter, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Ajouter $ajouter): Response
     {
         $form = $this->createForm(AjouterType::class, $ajouter);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('app_ajouter_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -69,11 +69,11 @@ class AjouterController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_ajouter_delete', methods: ['POST'])]
-    public function delete(Request $request, Ajouter $ajouter, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Ajouter $ajouter): Response
     {
         if ($this->isCsrfTokenValid('delete'.$ajouter->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($ajouter);
-            $entityManager->flush();
+            $this->entityManager->remove($ajouter);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('app_ajouter_index', [], Response::HTTP_SEE_OTHER);
