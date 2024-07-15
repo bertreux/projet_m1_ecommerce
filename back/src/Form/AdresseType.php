@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Back\Form;
+
+use App\Back\Entity\Adresse;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class AdresseType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('intitule')
+            ->add('ville')
+            ->add('region')
+            ->add('code_postal')
+            ->add('pays')
+            ->add('utilisateur')
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Adresse::class,
+        ]);
+    }
+}
