@@ -59,7 +59,7 @@ INSERT INTO `produit` (`id`, `nom`, `prix`, `stock`, `description`, `carousel`, 
 
 INSERT INTO `image` (`id`, `url`, `principal`, `produit_id`, `categorie_id`) VALUES
     (1, 'images/Alter-Chronos.jpg', 1, 8, NULL),
-    (2, 'images/Diablos-Nemesis-X-D.jpg', 1, 7, NULL),
+    (2, 'images/Diablo-Nemesis-X-D.jpg', 1, 7, NULL),
     (3, 'images/Flash-Sagittario.jpg', 1, 5, NULL),
     (4, 'images/Galaxy-Pegasus.jpg', 1, 1, NULL),
     (5, 'images/Glide-Ragnaruk-Wheel-Revolve-1S.jpg', 1, 10, NULL),
