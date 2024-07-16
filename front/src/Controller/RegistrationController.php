@@ -2,8 +2,13 @@
 
 namespace App\Front\Controller;
 
+use App\Front\Form\ChangeMdpType;
+use App\Front\Entity\Adresse;
+use App\Front\Form\ProfilType;
 use App\Front\Entity\Utilisateur;
 use App\Front\Form\RegistrationFormType;
+use App\Front\Repository\AdresseRepository;
+use App\Front\Repository\UtilisateurRepository;
 use App\Front\Security\EmailVerifier;
 use App\Front\Security\UtilisateurAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +23,7 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
-class RegistrationController extends AbstractController
+class RegistrationController extends FrontAbstractController
 {
     private EmailVerifier $emailVerifier;
 
@@ -87,5 +92,68 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_register');
     }
 
-    
+    #[Route('/profil', name: 'app_info_profil')]
+    public function profil(Request $request, AdresseRepository $adresseRepository, UtilisateurRepository $utilisateurRepository): Response
+    {
+        $form = $this->createForm(ProfilType::class, $this->getUser(), [
+            'dataAdresse' => $adresseRepository->findOneBy([
+                'utilisateur' => $this->getUser(),
+            ])
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $request->request->all()['profil'];
+            $user = $utilisateurRepository->find($this->getUser()->getId());
+            $adresse = $adresseRepository->findOneBy([
+                'utilisateur' => $this->getUser(),
+            ]);
+            if($adresse == null){
+                $adresse = new Adresse();
+                $adresse->setUtilisateur($user);
+            }
+            $user->setNom($data['nom']);
+            $user->setPrenom($data['prenom']);
+            $user->setTel($data['tel']);
+            $user->setNom($data['nom']);
+            $adresse->setIntitule($data['adresse']['intitule']);
+            $adresse->setVille($data['adresse']['ville']);
+            $adresse->setPays($data['adresse']['pays']);
+            $adresse->setRegion($data['adresse']['region']);
+            $adresse->setCodePostal($data['adresse']['code_postal']);
+            $utilisateurRepository->save($user,true);
+            $adresseRepository->save($adresse,true);
+            $this->addFlash("info", "Information bien enregistrées");
+        }
+        return $this->render('profil/index.html.twig', [
+            'formProfil' => $form->createView(),
+            'lsession' => $request->getSession()->get('cart'),
+        ]);
+    }
+
+    #[Route('/profil/mdp', name: 'app_mdp_profil')]
+    public function changeMdp(Request $request,  UserPasswordHasherInterface $userPasswordHasher, UtilisateurRepository $utilisateurRepository): Response
+    {
+        $user = $utilisateurRepository->find($this->getUser()->getId());
+        $form = $this->createForm(ChangeMdpType::class, $this->getUser(), []);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $request->request->all()['change_mdp'];
+            if($userPasswordHasher->isPasswordValid($user,$data['plainPassword_old'])){
+                $user->setMdp(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $data['plainPassword']
+                    )
+                );
+                $utilisateurRepository->save($user,true);
+                $this->addFlash("info", "Information bien enregistrées");
+            }else{
+                $this->addFlash("danger", "Mauvais ancien mot de passe");
+            }
+        }
+        return $this->render('profil/mdp.html.twig', [
+            'formMdp' => $form->createView(),
+            'lsession' => $request->getSession()->get('cart'),
+        ]);
+    }
 }

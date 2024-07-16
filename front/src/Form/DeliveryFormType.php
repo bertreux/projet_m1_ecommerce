@@ -29,16 +29,16 @@ class DeliveryFormType extends AbstractType
                     'data' => $options['dataAdresse']->getIntitule()
                 ])
                 ->add('ville', TextType::class, [
-                    'data' => $options['dataAdresse']->getIntitule()
+                    'data' => $options['dataAdresse']->getVille()
                 ])
                 ->add('region', TextType::class, [
-                    'data' => $options['dataAdresse']->getIntitule()
+                    'data' => $options['dataAdresse']->getRegion()
                 ])
                 ->add('code_postal', TextType::class, [
-                    'data' => $options['dataAdresse']->getIntitule()
+                    'data' => $options['dataAdresse']->getCodePostal()
                 ])
                 ->add('pays', TextType::class, [
-                    'data' => $options['dataAdresse']->getIntitule()
+                    'data' => $options['dataAdresse']->getPays()
                 ])
             ;
         }
