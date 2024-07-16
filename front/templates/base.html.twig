@@ -20,8 +20,15 @@
         </span>
             <ul class="navbar-nav">
                 <li class="nav-item mx-3">
-                    {% if lsession is null or lsession == [] %}
-                        <a href="{{ path('cart_index') }}"><i class="bi bi-cart-fill noLink"></i></a>
+                    {% if lsession is defined %}
+                        {% if lsession  and lsession is null or lsession == [] %}
+                            <a href="{{ path('cart_index') }}"><i class="bi bi-cart-fill noLink"></i></a>
+                        {% else %}
+                            <div class="notification">
+                                <span class="notification-badge"></span>
+                                <a href="{{ path('cart_index') }}"><i class="bi bi-cart-fill noLink"></i></a>
+                            </div>
+                        {% endif %}
                     {% else %}
                         <div class="notification">
                             <span class="notification-badge"></span>
