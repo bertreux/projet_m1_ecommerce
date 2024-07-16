@@ -48,14 +48,12 @@ class ProductController extends FrontAbstractController
         $similar = $stmt->executeQuery();
         $similar = $similar->fetchAllAssociative();
 
-        $compose = $this->composeRepository->findBy(['produit' => $produit->getId()]);
         $image = $this->imageRepository->findBy(['produit' => $produit->getId()]);
 
         return $this->render('product/index.html.twig', [
             'product' => $produit,
             'formStock' => $formStock,
             'similaires' => $similar,
-            'compose' => $compose,
             'images' => $image,
             'lsession' => $request->getSession()->get('cart'),
         ]);

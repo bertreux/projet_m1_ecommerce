@@ -28,8 +28,16 @@
                 <td>{{ utilisateur.email }}</td>
             </tr>
             <tr>
-                <th>Mdp</th>
-                <td>{{ utilisateur.mdp }}</td>
+                <th>Password</th>
+                <td>{{ utilisateur.password }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ utilisateur.getRolesString() }}</td>
+            </tr>
+            <tr>
+                <th>Verified</th>
+                <td>{{ utilisateur.verified }}</td>
             </tr>
         </tbody>
     </table>

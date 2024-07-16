@@ -18,7 +18,8 @@
                 <th>Prenom</th>
                 <th>Tel</th>
                 <th>Email</th>
-                <th>Mdp</th>
+                <th>Roles</th>
+                <th>Verified</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -30,7 +31,8 @@
                 <td>{{ utilisateur.prenom }}</td>
                 <td>{{ utilisateur.tel }}</td>
                 <td>{{ utilisateur.email }}</td>
-                <td>{{ utilisateur.mdp }}</td>
+                <td>{{ utilisateur.getRolesString() }}</td>
+                <td>{{ utilisateur.verified }}</td>
                 <td>
                     <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}" class="btn btn-info">show</a>
                     <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-warning">edit</a>

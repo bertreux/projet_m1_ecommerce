@@ -53,6 +53,7 @@ class UtilisateurFixtures extends Fixture
                 ->setRegion("region {$code_postal}")
                 ->setCodePostal($code_postal)
                 ->setPays($faker->country);
+            $manager->persist($adresse);
         }
 
         $manager->flush();
