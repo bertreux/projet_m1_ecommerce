@@ -3,6 +3,7 @@
 namespace App\Front\Controller;
 
 use App\Front\Repository\MailRepository;
+use App\Front\Repository\UtilisateurRepository;
 use App\Front\Service\CartService;
 use Doctrine\DBAL\Connection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +13,6 @@ use App\Front\Repository\CategorieRepository;
 use App\Front\Repository\CommandeRepository;
 use App\Front\Repository\ImageRepository;
 use App\Front\Repository\ProduitRepository;
-use App\Front\Repository\UtilisateurRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -27,7 +27,7 @@ class FrontAbstractController extends AbstractController
     protected $mailRepository;
 
     public function __construct(AdresseRepository $adresseRepository, CommandeRepository $commandeRepository,
-                                ImageRepository $imageRepository, CategorieRepository $categorieRepository,
+                                ImageRepository   $imageRepository, CategorieRepository $categorieRepository,
                                 ProduitRepository $produitRepository, UtilisateurRepository $utilisateurRepository,
                                 AjouterRepository $ajouterRepository, MailRepository $mailRepository)
     {
