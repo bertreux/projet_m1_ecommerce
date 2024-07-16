@@ -34,6 +34,15 @@ class UtilisateurFixtures extends Fixture
             ->setIsVerified(true);
         $this->addReference(self::ADMIN, $user);
         $manager->persist($user);
+        $adresse = new Adresse();
+        $code_postal = $faker->postcode;
+        $adresse->setUtilisateur($user)
+            ->setIntitule($faker->streetAddress)
+            ->setVille($faker->city)
+            ->setRegion("region {$code_postal}")
+            ->setCodePostal($code_postal)
+            ->setPays($faker->country);
+        $manager->persist($adresse);
 
         for ($i = 1; $i <= 10; $i++) {
             $user = new Utilisateur();
