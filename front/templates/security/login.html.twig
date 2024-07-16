@@ -9,14 +9,67 @@
     {% endif %}
 
     {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+    <style>
+        .user-panel {
+          width: 60%;
+          margin: 0 auto;
+          background: #f6f6f6;
+          border: 1px solid #ddd;
+          padding: 20px;
+          border-radius: 8px;
+        }
+      
+        .user-panel p {
+          font-size: 18px;
+          color: #333;
+        }
+      
+        .user-panel a {
+          display: block;
+          background-color: #007bff;
+          color: white;
+          padding: 10px 20px;
+          text-decoration: none;
+          border-radius: 4px;
+          margin-bottom: 10px;
+          text-align: center;
+        }
+      
+        .user-panel a:hover {
+          background-color: #0056b3;
+        }
+        
+        .user-panel .logout-container {
+          display: flex;
+          justify-content: space-between;
+          background-color: transparent;
+          margin-bottom: 20px;
+        }
+        
+        .logout-container a {
+          background-color: #000;
+        }
+      </style>
+      
+      <div class="user-panel mb-3">
+        <div class="logout-container">
+          <p>Vous êtes connecté en tant que :  {{ app.user.email }}</p>
+          <a href="{{ path('app_logout') }}">Logout</a>
         </div>
-    {% endif %}
+
+
+        
+        <a href="{{ path('order_livraison') }}">Valider la livraison d'une commande</a>
+        <hr>
+        <a href="{{ path('order_history') }}">Voir toutes mes commandes</a>
+        <hr>
+      </div>
+      
+    {% else %}
 
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inpuEmail">Email</label>
-    <input type="text" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+    <label for="inputEmail">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
     <label for="inputPassword">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
@@ -24,18 +77,22 @@
            value="{{ csrf_token('authenticate') }}"
     >
 
-    <a href="{{ path('app_forgot_password_request') }}" class="noLinkInherit">Forgot password</a>
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
 
-    <div class="checkbox mb-3 mt-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Remember me
-        </label>
-    </div>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+    #}
 
     <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
+        Se connecter
     </button>
-</form>
     <hr>
-    <a href="{{ path('app_register') }}" class="btn btn-primary">S'enregistrer</a>
+    Si vous n'avez pas de compte aller sur la page <a href="{{ path('app_register') }}">inscription</a>
+    {% endif %}
+</form>
 {% endblock %}
