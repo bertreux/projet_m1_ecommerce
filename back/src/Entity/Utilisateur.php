@@ -62,6 +62,11 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         $this->mails = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->getUserIdentifier();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

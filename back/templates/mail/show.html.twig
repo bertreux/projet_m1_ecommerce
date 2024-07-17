@@ -7,20 +7,23 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ mail.id }}</td>
-            </tr>
-            <tr>
-                <th>Objet</th>
-                <td>{{ mail.objet }}</td>
-            </tr>
-            <tr>
-                <th>Text</th>
-                <td>{{ mail.text }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ mail.id }}</td>
+        </tr>
+        <tr>
+            <th>Mail user</th>
+            <td>{{ mail.utilisateur.email }}</td>
+        </tr>
+        <tr>
+            <th>Objet</th>
+            <td>{{ mail.objet }}</td>
+        </tr>
         </tbody>
     </table>
+
+    <strong>Text :</strong>
+    <p style="margin-left: 20px;">{{ mail.text|nl2br }}</p>
 
     <a href="{{ path('app_mail_index') }}" class="btn btn-secondary mt-2">retour a la liste</a>
 
