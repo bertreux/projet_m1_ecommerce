@@ -37,13 +37,13 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Adresse::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Adresse::class, cascade: ["remove"])]
     private Collection $adresses;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Commande::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Commande::class, cascade: ["remove"])]
     private Collection $commandes;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Mail::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Mail::class, cascade: ["remove"])]
     private Collection $mails;
 
     /**

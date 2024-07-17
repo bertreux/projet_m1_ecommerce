@@ -31,13 +31,13 @@ class Produit
     #[ORM\ManyToOne(inversedBy: 'produits')]
     private ?Categorie $categorie = null;
 
-    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Image::class)]
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Image::class, cascade: ["remove"])]
     private Collection $images;
 
-    #[ORM\ManyToMany(targetEntity: Commande::class, inversedBy: 'produits')]
+    #[ORM\ManyToMany(targetEntity: Commande::class, inversedBy: 'produits', cascade: ["remove"])]
     private Collection $commande;
 
-    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Ajouter::class)]
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Ajouter::class, cascade: ["remove"])]
     private Collection $ajouters;
 
     #[ORM\Column]
