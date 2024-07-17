@@ -8,8 +8,11 @@ use App\Front\Entity\Commande;
 use App\Front\Form\DeliveryFormType;
 use App\Front\Form\LivraisonFormType;
 use App\Front\Form\OrderType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -76,7 +79,7 @@ class OrderController extends FrontAbstractController
     }
 
     #[Route('/order/create', name: 'order_index')]
-    public function index(Request $request): Response
+    public function index(Request $request, MailerInterface $mailer): Response
     {
         if (!$this->getUser()){
             return $this->redirectToRoute('app_login');
@@ -96,7 +99,6 @@ class OrderController extends FrontAbstractController
                 }
             }
         }
-
 
         $adresse = $this->adresseRepository->findOneBy(['utilisateur' => $this->getUser()]);
 
@@ -151,7 +153,22 @@ class OrderController extends FrontAbstractController
                 $this->ajouterRepository->save($ajouter, true);
             }
             $session = $request->getSession();
+
+            $email = (new TemplatedEmail())
+                ->from('admin@doe.fr')
+                ->to(new Address($this->getUser()->getUserIdentifier()))
+                ->subject('merci pour votre achat')
+                ->htmlTemplate('emails/order.html.twig')
+                ->context([
+                    'commande' => $commande,
+                    'cart' => $panier,
+
+                ])
+            ;
+            $mailer->send($email);
+
             $session->remove('cart');
+
             return $this->redirectToRoute('homepage');
         }
 
