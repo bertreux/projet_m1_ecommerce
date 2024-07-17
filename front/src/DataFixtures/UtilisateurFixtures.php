@@ -27,7 +27,7 @@ class UtilisateurFixtures extends Fixture
         $user = new Utilisateur();
         $user->setNom('admin')
             ->setPrenom('admin')
-            ->setTel($faker->phoneNumber())
+            ->setTel("0000000000")
             ->setEmail('admin@doe.fr')
             ->setPassword($this->hasher->hashPassword($user, 'admin0'))
             ->setRoles(['ROLE_ADMIN'])
@@ -50,7 +50,7 @@ class UtilisateurFixtures extends Fixture
                 ->setRoles([])
                 ->setNom($faker->name())
                 ->setPrenom($faker->firstName())
-                ->setTel($faker->phoneNumber())
+                ->setTel("0000000000")
                 ->setPassword($this->hasher->hashPassword($user, '000000'))
                 ->setPrenom(true);
             $manager->persist($user);
