@@ -15,9 +15,28 @@
                 <th>Url</th>
                 <td>{{ image.url }}</td>
             </tr>
+            {% if image.principal == 0 %}
+                <tr>
+                    <th>Principal</th>
+                    <td>False</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <th>Principal</th>
+                    <td>True</td>
+                </tr>
+            {% endif %}
             <tr>
-                <th>Principal</th>
-                <td>{{ image.principal ? 'Yes' : 'No' }}</td>
+                <th>Produit</th>
+                <td>{{ image.produit }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ image.categorie }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img width="200px" src="{{ asset(image.url) }}"/> </td>
             </tr>
         </tbody>
     </table>

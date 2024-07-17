@@ -5,14 +5,17 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/e_commerce.js') }}"></script>
 {% endblock %}
 
 {% block body %}
     <h1>Mail index</h1>
-
+    <input type="hidden" id="NomObjet" value="Mail">
+    <input type="hidden" id="Url" value="{{ path('app_fetch_tableau') }}">
     <table class="table" id="myTable">
         <thead>
             <tr>
+                <td class="no-sort colloneTable"><input id="checkboxAll" type="checkbox" onchange="selectAll(this)"></td>
                 <th>Id</th>
                 <th>Objet</th>
                 <th>Text</th>
@@ -22,17 +25,16 @@
         <tbody>
         {% for mail in mails %}
             <tr>
+                <td><input type="checkbox" onchange="selectOne()"></td>
                 <td>{{ mail.id }}</td>
                 <td>{{ mail.objet }}</td>
                 <td>{{ mail.text }}</td>
                 <td>
                     <a href="{{ path('app_mail_show', {'id': mail.id}) }}" class="btn btn-info">show</a>
-                    <a href="{{ path('app_mail_edit', {'id': mail.id}) }}" class="btn btn-warning">edit</a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_mail_new') }}" class="btn btn-primary">Créer un nouveau</a>
+    <button id="btn-delete-row" style="display: none" onclick="deleteRows()" class="btn btn-danger">Supprimer</button>
 {% endblock %}
