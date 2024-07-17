@@ -5,14 +5,17 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/e_commerce.js') }}"></script>
 {% endblock %}
 
 {% block body %}
     <h1>Ajouter index</h1>
-
+    <input type="hidden" id="NomObjet" value="Ajouter">
+    <input type="hidden" id="Url" value="{{ path('app_fetch_tableau') }}">
     <table class="table" id="myTable">
         <thead>
             <tr>
+                <td class="no-sort colloneTable"><input id="checkboxAll" type="checkbox" onchange="selectAll(this)"></td>
                 <th>Id</th>
                 <th>Qte</th>
                 <th>Date</th>
@@ -22,6 +25,7 @@
         <tbody>
         {% for ajouter in ajouters %}
             <tr>
+                <td><input type="checkbox" onchange="selectOne()"></td>
                 <td>{{ ajouter.id }}</td>
                 <td>{{ ajouter.qte }}</td>
                 <td>{{ ajouter.date ? ajouter.date|date('Y-m-d') : '' }}</td>
@@ -35,4 +39,5 @@
     </table>
 
     <a href="{{ path('app_ajouter_new') }}" class="btn btn-primary">Créer un nouveau</a>
+    <button id="btn-delete-row" style="display: none" onclick="deleteRows()" class="btn btn-danger">Supprimer</button>
 {% endblock %}
