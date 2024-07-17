@@ -63,6 +63,8 @@ class UtilisateurFixtures extends Fixture
                 ->setCodePostal($code_postal)
                 ->setPays($faker->country);
             $manager->persist($adresse);
+            $this->addReference("user{$i}", $user);
+            $this->addReference("adress{$i}", $adresse);
         }
 
         $manager->flush();
