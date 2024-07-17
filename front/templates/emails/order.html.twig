@@ -1,0 +1,29 @@
+<p>Monsieur {{ commande.utilisateur.nom }} {{ commande.utilisateur.prenom }},</p>
+
+<p>Merci de votre achat effectué le {{ "now"|date("d/m/Y") }}.</p>
+
+<p>Vos achats seront livrés à l'adresse suivante :</p>
+<p>{{ commande.adresse.intitule }} {{ commande.adresse.ville }} {{ commande.adresse.region }} {{ commande.adresse.codePostal }}{{ commande.adresse.pays }}</p>
+
+<h3>Voici les détails de votre commande :</h3>
+
+<table style="width:100%; border-collapse: collapse;">
+    <thead>
+    <tr style="background-color: #f2f2f2;">
+        <th style="padding: 8px; border: 1px solid #ddd;">Produit</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Quantité</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Prix unitaire</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for produit in cart %}
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ddd;">{{ produit.product.nom }}</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">{{ produit.quantity }}</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">{{ produit.product.prix }} €</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">{{ produit.quantity * produit.product.prix }} €</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
