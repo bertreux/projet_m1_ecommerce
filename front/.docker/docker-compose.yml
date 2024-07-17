@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+    php:
+        build:
+            context: ./php
+            args:
+                TIMEZONE: ${TIMEZONE}
+        volumes:
+            - ../:/var/www/symfony:cached
+            - symfony_app_var_front:/var/www/symfony/var
+            - symfony_app_vendor_front:/var/www/symfony/vendor
+        networks:
+            - symfony_app
+
+    nginx:
+        build:
+            context: ./nginx
+        volumes:
+            - ../:/var/www/symfony:cached
+            - symfony_app_var_front:/var/www/symfony/var
+            - symfony_app_vendor_front:/var/www/symfony/vendor
+        ports:
+            - 8081:80
+        networks:
+            - symfony_app
+        env_file:
+            - .env.nginx.local
+
+    mailpit:
+        image: axllent/mailpit
+        ports:
+            - "8026:8025"
+            - "1026:1025"
+        volumes:
+            - mailpit_data:/data
+        networks:
+            - symfony_app
+
+volumes:
+    symfony_app_var_front:
+    symfony_app_vendor_front:
+    mailpit_data:
+
+networks:
+    symfony_app:
+        external: true
