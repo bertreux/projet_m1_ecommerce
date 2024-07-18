@@ -3,84 +3,177 @@
 {% block title %}Accueil{% endblock %}
 
 {% block content %}
-    <h1>Bienvenue sur le site</h1><hr>
-    <h1></h1>
+    <style>
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .carouselProduit {
+            margin-bottom: 30px;
+        }
+
+        .imageCarousel {
+            border-radius: 8px;
+        }
+
+        .carousel-indicators li {
+            background-color: #007bff;
+        }
+
+        .carousel-indicators .active {
+            background-color: #0056b3;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-size: 1.25rem;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .card-img {
+            max-height: 200px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .article_contenu {
+            font-size: 1rem;
+            color: #333;
+            line-height: 1.5;
+            padding: 15px;
+        }
+
+        .card-footer {
+            background-color: #f1f1f1;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <h1>Bienvenue sur le site</h1>
+    <hr>
     <div class="d-flex justify-content-center carouselProduit">
         <div id="carouselIndicators" class="carousel slide" style="width: 450px;height: 300px" data-bs-ride="carousel" data-bs-interval="3000">
-        <!-- Indicateurs de la diapositive -->
-        <ol class="carousel-indicators">
-            {% set i=0 %}
-            {% for carousel in carousels %}
-                {% if i == 0 %}
-                    <li data-bs-target="#carouselIndicators" data-bs-slide-to={{ i }} class="active"></li>
-                {% else %}
-                    <li data-bs-target="#carouselIndicators" data-bs-slide-to={{ i }}></li>
-                {% endif %}
-                {% set i = i+1 %}
-            {% endfor %}
-        </ol>
+            <!-- Indicateurs de la diapositive -->
+            <ol class="carousel-indicators">
+                {% set i=0 %}
+                {% for carousel in carousels %}
+                    {% if i == 0 %}
+                        <li data-bs-target="#carouselIndicators" data-bs-slide-to="{{ i }}" class="active"></li>
+                    {% else %}
+                        <li data-bs-target="#carouselIndicators" data-bs-slide-to="{{ i }}"></li>
+                    {% endif %}
+                    {% set i = i+1 %}
+                {% endfor %}
+            </ol>
 
-        <!-- Slides -->
-        <div class="carousel-inner">
-            {% set i=0 %}
-            {% for carousel in carousels %}
-                {% if i == 0 %}
-                    <div class="carousel-item active">
-                    {% if carousel.images[0].url is defined %}
-                        {% for img in carousel.images  %}
-                            {% if img.principal == 1 %}
-                                <a href="{{ path('shop_index', {'id': carousel.id}) }}"><img src="{{ asset(img.url) }}" class="d-block w-100 imageCarousel" alt={{ i }}></a>
-                            {% endif %}
-                        {% endfor %}
+            <!-- Slides -->
+            <div class="carousel-inner">
+                {% set i=0 %}
+                {% for carousel in carousels %}
+                    {% if i == 0 %}
+                        <div class="carousel-item active">
+                        {% if carousel.images[0].url is defined %}
+                            {% for img in carousel.images %}
+                                {% if img.principal == 1 %}
+                                    <a href="{{ path('shop_index', {'id': carousel.id}) }}"><img src="{{ asset(img.url) }}" class="d-block w-100 imageCarousel" alt="{{ i }}"></a>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="carousel-item">
+                        {% if carousel.images[0].url is defined %}
+                            {% for img in carousel.images %}
+                                {% if img.principal == 1 %}
+                                    <a href="{{ path('shop_index', {'id': carousel.id}) }}"><img src="{{ asset(img.url) }}" class="d-block w-100 imageCarousel" alt="{{ i }}"></a>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        </div>
                     {% endif %}
-                    </div>
-                {% else %}
-                    <div class="carousel-item">
-                    {% if carousel.images[0].url is defined %}
-                        {% for img in carousel.images  %}
-                            {% if img.principal == 1 %}
-                                <a href="{{ path('shop_index', {'id': carousel.id}) }}"><img src="{{ asset(img.url) }}" class="d-block w-100 imageCarousel" alt={{ i }}></a>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    </div>
-                {% endif %}
-                {% set i = i+1 %}
-            {% endfor %}
+                    {% set i = i+1 %}
+                {% endfor %}
+            </div>
+
+            <!-- Boutons de contrôle -->
+            <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselIndicators" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
         </div>
-
-        <!-- Boutons de contrôle -->
-        <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselIndicators" role="button" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </a>
-      </div>
     </div>
     <hr>
     <div class="row mb-2">
         <h1>Les catégories</h1>
         {% for categories in category %}
-            <article class="col-4 mb-4">
+            <article class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <h2 class="card-header">
                         {{ categories.nom }}
                     </h2>
                     <div class="card-img article_contenu">
                         {% if categories.images[0].url is defined %}
-                            {% for img in categories.images  %}
+                            {% for img in categories.images %}
                                 {% if img.principal == 1 %}
-                                    <img class="imageCart" src="{{ asset(img.url) }}" alt="test"/>
+                                    <img class="imageCart" src="{{ asset(img.url) }}" alt="{{ categories.nom }}">
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
                     </div>
-                    <hr>
                     <footer class="card-footer d-flex justify-content-between">
-                        <a href="{{ path('app_category', {'id': categories.id}) }}">Cliquer ici pour voir les produits</a>
+                        <a href="{{ path('app_category', {'id': categories.id}) }}">Voir les produits</a>
                     </footer>
                 </div>
             </article>
@@ -90,32 +183,31 @@
     <div class="row">
         <h1>Nos Best Sellers</h1>
         {% for produits in product %}
-            <article class="col-4 mb-4">
+            <article class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <h2 class="card-header">
                         {{ produits.nom }}
                     </h2>
                     <div class="card-img article_contenu">
                         {% if produits.images[0].url is defined %}
-                            {% for img in produits.images  %}
+                            {% for img in produits.images %}
                                 {% if img.principal == 1 %}
-                                    <img class="imageCart" src="{{ asset(img.url) }}"/>
+                                    <img class="imageCart" src="{{ asset(img.url) }}" alt="{{ produits.nom }}">
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
                     </div>
-                    <hr>
                     <div class="card-body article_contenu">
                         {{ produits.description }}
-                    <hr>
+                        <hr>
                         {% if produits.stock > 0 %}
                             Stock : {{ produits.stock }} produit(s)
                         {% else %}
-                            STOCK ÉPUISÉ
+                            <span style="color: red;">STOCK ÉPUISÉ</span>
                         {% endif %}
                     </div>
                     <footer class="card-footer d-flex justify-content-between">
-                        <a href="{{ path('shop_index', {'id': produits.id}) }}">Cliquer ici pour voir le produit</a>
+                        <a href="{{ path('shop_index', {'id': produits.id}) }}">Voir le produit</a>
                         <h5 class="mt-2">{{ produits.prix }} €</h5>
                     </footer>
                 </div>

@@ -8,39 +8,60 @@
       width: 80%;
       margin: 0 auto;
       padding: 20px;
-      font-size: 1.2rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      font-size: 1.1rem;
     }
-  
+    
     .order-detail-container h1, h2 {
       color: #333;
+      margin-bottom: 20px;
     }
-  
-    .product-list {
+
+    .order-detail-container h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .order-detail-container h2 {
+      font-size: 1.5rem;
+    }
+
+    .order-summary, .product-list {
       background: #f6f6f6;
       border: 1px solid #ddd;
       padding: 20px;
       border-radius: 8px;
       margin: 10px 0;
     }
-  
+
+    .order-summary h2 {
+      margin-bottom: 20px;
+    }
+
     .product-list img {
       border-radius: 4px;
+      width: 80px;
+      height: 80px;
     }
-  
+
     .product-list .product-info {
       margin-left: 15px;
+      flex: 1;
     }
-  
+
     .product-list .product-info h3 {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
+      color: #007bff;
     }
-  
+
     .product-list .product-info p {
-      margin: 0.5rem 0;
+      margin: 5px 0;
       color: #666;
     }
-  
+
     .order-detail-container .btn-info {
       color: #fff;
       background-color: #007bff;
@@ -50,58 +71,83 @@
       padding: 10px;
       border-radius: 4px;
       text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
     }
-  </style>
-  
-  <div class="order-detail-container">
+
+    .order-detail-container .btn-info:hover {
+      background-color: #0056b3;
+      border-color: #004085;
+    }
+
+    .order-info {
+      margin-bottom: 20px;
+    }
+
+    .order-info p {
+      margin: 5px 0;
+    }
+
+    .order-total {
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: right;
+      margin-top: 20px;
+    }
+
+    .order-status {
+      font-weight: bold;
+      color: #007bff;
+    }
+</style>
+
+<div class="order-detail-container" style="margin-top: 50px;">
+    <h1>Détails de la Commande</h1>
+    <div class="order-info">
+        <p>Date de commande : <strong>{{ commande.ajouters[0].date|date('d/m/Y') }}</strong></p>
+        {% set productTot = 0 %}
+        {% set prix = 0 %}
+        {% for product in commande.ajouters %}
+            {% set productTot = productTot + product.qte %}
+            {% set prix = prix + product.produit.prix * product.qte %}
+        {% endfor %}
+        Couts total : <strong>{{ prix }}</strong><br>
+        <p>Produits totaux : <strong>{{ productTot }}</strong></p>
+        <p>Statut de la commande : <span class="order-status">{{ commande.statut }}</span></p>
+        <p>Adresse de livraison : <strong>{{ commande.adresse.intitule }}, {{ commande.adresse.codePostal }} {{ commande.adresse.ville }}, {{ commande.adresse.pays }}, {{ commande.adresse.region }}</strong></p>
+    </div>
     <hr>
-    Commande du {{ commande.ajouters[0].date|date('Y-m-d') }}<br>
-    {% set productTot = 0 %}
-    {% set prix = 0 %}
-    {% for product in commande.ajouters %}
-        {% set productTot = productTot + product.qte %}
-        {% set prix = prix + product.produit.prix * product.qte %}
-    {% endfor %}
-    Couts total : {{ prix }}<br>
-    Produits totaux : {{ productTot }} €<br>
-    Statut de la commande : {{ commande.statut }}<br>
-    Adresse de livraison : {{ commande.adresse.intitule }} {{ commande.adresse.codePostal }} {{ commande.adresse.ville }} {{ commande.adresse.pays }} {{ commande.adresse.region }}
-    <hr>
-    <div class="col-lg-5 offset-lg-1 pt-1">
-        <h2 class="pb-2 pt-md-2 my-4 mt-lg-5">Récapitulatif de votre commande<br><span
-                    class="fs-base fw-normal text-muted">({{ commande.produits|length }}  produits)</span></h2>
-        {% set total = null%}
+    <div class="order-summary">
+        <h2>Récapitulatif de votre commande <span class="text-muted">({{ commande.produits|length }} produits)</span></h2>
         {% for produit in commande.produits %}
             <div class="product-list d-flex align-items-center border-top py-4">
-                <a class="d-inline-block flex-shrink-0 bg-secondary rounded-1 p-sm-2 p-xl-3 mb-2 mb-sm-0" href="">
+                <a class="d-inline-block flex-shrink-0 bg-secondary rounded-1 p-sm-2 p-xl-3 mb-2 mb-sm-0" href="#">
                     {% if produit.images[0].url is defined %}
-                        {% for img in produit.images  %}
+                        {% for img in produit.images %}
                             {% if img.principal == 1 %}
-                                <img src="{{ asset(img.url) }}" width="80" height="80" alt="{{ produit.nom }}"></a>
+                                <img src="{{ asset(img.url) }}" alt="{{ produit.nom }}">
                             {% endif %}
                         {% endfor %}
                     {% endif %}
+                </a>
                 <div class="product-info w-100 pt-1 ps-sm-4">
-                    <div class="d-block">
-                        <div class="me-3" style="position: relative; top: 15px;">
-                            <h3 class="h5 mb-2"><a href="{{ path('shop_index', {id: produit.id}) }}">{{ produit.nom }}</a></h3>
-                            <p>{{ produit.description }}</p>
-                        </div>
-                        <div>
-                            {% for ajout in commande.ajouters %}
-                                {% if ajout.produit.id == produit.id %}
-                                    <p class="mb-2">Quantité : {{ ajout.qte }}</p>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
+                    <h3 class="h5 mb-2"><a href="{{ path('shop_index', {id: produit.id}) }}">{{ produit.nom }}</a></h3>
+                    <p>{{ produit.description }}</p>
+                    {% for ajout in commande.ajouters %}
+                        {% if ajout.produit.id == produit.id %}
+                            <p class="mb-2">Quantité : {{ ajout.qte }}</p>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         {% endfor %}
+        <div class="order-total">
+            <p>Total : {{ (prix) }} €</p>
+        </div>
     </div>
     {% if commande.statut == "En cour" %}
-        <br><br><a class="btn btn-info" href="{{ path('change_status_livraison', {id: commande.id}) }}">Valider la livraison</a>
+        <a class="btn btn-info" href="{{ path('change_status_livraison', {id: commande.id}) }}">Valider la livraison</a>
     {% endif %}
-  </div>
-  
+</div>
+
 {% endblock %}

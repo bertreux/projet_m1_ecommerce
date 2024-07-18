@@ -5,75 +5,119 @@
 {% block content %}
 
     <style>
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        
         .form-container {
-          width: 60%;
-          margin: 0 auto;
-          background: #f6f6f6;
-          border: 1px solid #ddd;
-          padding: 20px;
-          border-radius: 8px;
+            width: 60%;
+            margin: 50px auto;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .form-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
         }
         
         .form-group {
-          margin-bottom: 20px;
+            margin-bottom: 20px;
         }
         
         .form-group label {
-          font-weight: bold;
-          display: block;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
         }
         
-        .form-group input, .form-group textarea, .form-group select {
-          width: 100%;
-          padding: 10px;
-          border-radius: 4px;
-          border: 1px solid #ccc;
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, 
+        .form-group textarea:focus, 
+        .form-group select:focus {
+            border-color: #007bff;
+            outline: none;
         }
         
         .form-group button {
-          padding: 10px 20px;
-          background-color: #007bff;
-          border: none;
-          color: white;
-          border-radius: 4px;
-          cursor: pointer;
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
         }
-      
+        
         .form-group button:hover {
-          background-color: #0056b3;
+            background-color: #0056b3;
         }
-      </style>
-      {{ form_start(registrationForm) }}
-      <div class="form-container">
+        
+        .form-errors {
+            color: #a94442;
+            background-color: #f2dede;
+            border: 1px solid #ebccd1;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group .custom-checkbox {
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-group .custom-checkbox input {
+            margin-right: 10px;
+        }
+    </style>
+
+    <div class="form-container">
         <h1>Inscription</h1>
-        {{ form_errors(registrationForm) }}
-        <form method="post">
-          <div class="form-group">
+        {{ form_start(registrationForm) }}
+        {{ form_errors(registrationForm) ? '<div class="form-errors">' ~ form_errors(registrationForm) ~ '</div>' }}
+        <div class="form-group">
             {{ form_row(registrationForm.prenom) }}
-          </div>
-          <div class="form-group">
+        </div>
+        <div class="form-group">
             {{ form_row(registrationForm.nom) }}
-          </div>
-          <div class="form-group">
+        </div>
+        <div class="form-group">
             {{ form_row(registrationForm.tel) }}
-          </div>
-          <div class="form-group">
+        </div>
+        <div class="form-group">
             {{ form_row(registrationForm.email) }}
-          </div>
-          <div class="form-group">
+        </div>
+        <div class="form-group">
             {{ form_row(registrationForm.plainPassword, {
                 label: 'Password'
             }) }}
-          </div>
-          <div class="form-group">
+        </div>
+        <div class="form-group custom-checkbox">
             {{ form_row(registrationForm.agreeTerms) }}
-
-            {{ form_end(registrationForm) }}
-          </div>
-          <div class="form-group">
+        </div>
+        <div class="form-group">
             <button type="submit" class="btn">Valider</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        {{ form_end(registrationForm) }}
+    </div>
       
 {% endblock %}

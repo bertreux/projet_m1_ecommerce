@@ -3,30 +3,110 @@
 {% block title %}Produit{% endblock %}
 
 {% block content %}
+    <style>
+        .displayProduit {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
+        .displayProduit > div {
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .carouselProduit {
+            max-width: 500px;
+        }
+
+        .imageCarousel {
+            border-radius: 8px;
+        }
+
+        .carousel-indicators li {
+            background-color: #007bff;
+        }
+
+        .carousel-indicators .active {
+            background-color: #0056b3;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-size: 1.25rem;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .article_contenu {
+            font-size: 1rem;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .card-footer {
+            background-color: #f1f1f1;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        h3, h1 {
+            color: #333;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 
     <h3>{{ product.nom }}</h3>
     <hr>
     <div class="displayProduit">
-        <div style="width: 800px;">
-            Description : <br>
+        <div>
+            <strong>Description :</strong><br>
             {{ product.description }}<br><br>
-            Prix : {{ product.prix }} €<br>
+            <strong>Prix :</strong> {{ product.prix }} €<br>
             {% if product.stock > 0 %}
-                Stock : {{ product.stock }} produit(s)
+                <strong>Stock :</strong> {{ product.stock }} produit(s)
             {% else %}
-                <p>STOCK ÉPUISÉ</p>
+                <p style="color: red;"><strong>STOCK ÉPUISÉ</strong></p>
             {% endif %}
             <br>
             {% if product.stock > 0 %}
                 {{ form_start(formStock) }}
                 {{ form_widget(formStock.nombre) }}
-                {{ form_widget(formStock.submit) }}
+                {{ form_widget(formStock.submit, {'attr': {'class': 'btn'}}) }}
                 {{ form_end(formStock) }}
             {% endif %}
         </div>
         <div class="d-flex justify-content-center carouselProduit">
-            <div id="carouselIndicators" class="carousel slide" style="width: 450px;height: 300px"
+            <div id="carouselIndicators" class="carousel slide"
                  data-bs-ride="carousel"
                  data-bs-interval="3000">
                 <!-- Indicateurs de la diapositive -->
@@ -34,11 +114,11 @@
                     {% set i=0 %}
                     {% for carousel in images %}
                         {% if i == 0 %}
-                            <li data-bs-target="#carouselIndicators" data-bs-slide-to={{ i }} class="active"></li>
+                            <li data-bs-target="#carouselIndicators" data-bs-slide-to="{{ i }}" class="active"></li>
                         {% else %}
-                            <li data-bs-target="#carouselIndicators" data-bs-slide-to={{ i }}></li>
+                            <li data-bs-target="#carouselIndicators" data-bs-slide-to="{{ i }}"></li>
                         {% endif %}
-                        {% set i = i+1 %}
+                        {% set i = i + 1 %}
                     {% endfor %}
                 </ol>
 
@@ -48,14 +128,14 @@
                     {% for carousel in images %}
                         {% if i == 0 %}
                             <div class="carousel-item active">
-                                <img src="{{ asset(carousel.url) }}" class="d-block w-100 imageCarousel" alt={{ i }}>
+                                <img src="{{ asset(carousel.url) }}" class="d-block w-100 imageCarousel" alt="{{ i }}">
                             </div>
                         {% else %}
                             <div class="carousel-item">
-                                <img src="{{ asset(carousel.url) }}" class="d-block w-100 imageCarousel" alt={{ i }}>
+                                <img src="{{ asset(carousel.url) }}" class="d-block w-100 imageCarousel" alt="{{ i }}">
                             </div>
                         {% endif %}
-                        {% set i = i+1 %}
+                        {% set i = i + 1 %}
                     {% endfor %}
                 </div>
 
@@ -76,7 +156,7 @@
     <div class="row">
         <h1>Similaires</h1>
         {% for produits in similaires %}
-            <article class="col-4 mb-4">
+            <article class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <h2 class="card-header">
                         {{ produits.nom }}
@@ -85,7 +165,7 @@
                         {{ produits.description }}
                     </div>
                     <footer class="card-footer d-flex justify-content-between">
-                        <a href="{{ path('shop_index', {'id': produits.id}) }}">Cliquer ici pour voir le produit</a>
+                        <a href="{{ path('shop_index', {'id': produits.id}) }}">Voir le produit</a>
                         <h5 class="mt-2">{{ produits.prix }} €</h5>
                     </footer>
                 </div>
