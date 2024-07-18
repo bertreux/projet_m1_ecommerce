@@ -2,8 +2,15 @@
 
 {% block title %}Edit Image{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/e_commerce.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     <h1>Edit Image</h1>
+
+    Image actuelle : <img width="200px" src="{{ asset(image.url) }}"><br><hr>
 
     {{ include('image/_form.html.twig', {'button_label': 'Update'}) }}
 

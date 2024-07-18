@@ -27,7 +27,7 @@
             <tr>
                 <td><input type="checkbox" onchange="selectOne()"></td>
                 <td>{{ image.id }}</td>
-                <td>{{ image.url }}</td>
+                <td><img class="imageIndex" src="{{ asset( image.url ) }}"></td>
                 <td>{{ image.principal ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('app_image_show', {'id': image.id}) }}" class="btn btn-info">show</a>

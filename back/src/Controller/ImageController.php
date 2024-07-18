@@ -28,7 +28,7 @@ class ImageController extends BackAbstractController
     public function new(Request $request): Response
     {
         $image = new Image();
-        $form = $this->createFormImageAndTestExtensionImage($request, $image);
+        $form = $this->createFormImageAndTestExtensionImage($request, $image, true);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $fileSystem = new Filesystem();
@@ -54,14 +54,19 @@ class ImageController extends BackAbstractController
     public function edit(Request $request, Image $image): Response
     {
         $oldFile = $image->getUrl();
-        $form = $this->createFormImageAndTestExtensionImage($request, $image);
+        $form = $this->createFormImageAndTestExtensionImage($request, $image, false, $oldFile);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            unlink($oldFile);
-            unlink('../../front/public/'.$oldFile);
-            $fileSystem = new Filesystem();
-            $file = $form['url']->getData();
-            return $this->moveImageAndSetPrincipal($file, $fileSystem, $image, $data);
+            if($form['url']->getData() == $oldFile) {
+                $this->setPrincipalNew($data, $image);
+                return $this->redirectToRoute('app_image_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                unlink($oldFile);
+                unlink('../../front/public/'.$oldFile);
+                $fileSystem = new Filesystem();
+                $file = $form['url']->getData();
+                return $this->moveImageAndSetPrincipal($file, $fileSystem, $image, $data);
+            }
         }
 
         return $this->renderForm('image/edit.html.twig', [
@@ -93,9 +98,15 @@ class ImageController extends BackAbstractController
     {
         $fileName = rand(1, 999999999) . '.' . $file->getClientOriginalExtension();
         $fileSystem->copy($file->getPathname(), 'images/' . $fileName);
-        $file->move('../../public/images', $fileName);
+        $file->move('../../front/public/images', $fileName);
         $image->setUrl('images/' . $fileName);
 
+        $this->setPrincipalNew($data, $image);
+        return $this->redirectToRoute('app_image_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    public function setPrincipalNew($data, $image)
+    {
         $imageP = $this->imageRepository->findOneBy([
             'principal' => true,
             'produit' => $data->getProduit(),
@@ -112,7 +123,6 @@ class ImageController extends BackAbstractController
 
         $this->imageRepository->save($image, true);
 
-        return $this->redirectToRoute('app_image_index', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
@@ -120,17 +130,23 @@ class ImageController extends BackAbstractController
      * @param Image $image
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createFormImageAndTestExtensionImage(Request $request, Image $image) {
-        $form = $this->createForm(ImageType::class, $image);
+    public function createFormImageAndTestExtensionImage(Request $request, Image $image, $imageRequired, $oldFile = null) {
+        $form = $this->createForm(ImageType::class, $image, [
+            'imageRequired' => $imageRequired,
+            'dataImage' => $oldFile
+        ]);
         $form->handleRequest($request);
 
         if($form->isSubmitted()){
-            $allowedExtensions = ['jpg', 'jpeg', 'png'];
-            $file = $form['url']->getData();
-            $originalExtension = $file->getClientOriginalExtension();
-            if (!in_array($originalExtension, $allowedExtensions)) {
-                $form->get('url')->addError(new FormError("L'image doit avoir comme extension jpg, png ou jpeg"));
+            if($form['url']->getData() != $oldFile) {
+                $allowedExtensions = ['jpg', 'jpeg', 'png'];
+                $file = $form['url']->getData();
+                $originalExtension = $file->getClientOriginalExtension();
+                if (!in_array($originalExtension, $allowedExtensions)) {
+                    $form->get('url')->addError(new FormError("L'image doit avoir comme extension jpg, png ou jpeg"));
+                }
             }
+
         }
         return $form;
     }
