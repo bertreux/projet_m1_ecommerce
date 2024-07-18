@@ -92,3 +92,20 @@ function selectOne() {
         document.getElementById('btn-delete-row').style.display = 'none';
     }
 }
+
+function imageProduit(){
+    if(document.getElementById("image_produit").value != ""){
+        document.getElementById("image_categorie").style.display = "none";
+        document.getElementById("image_categorie").value = null;
+    }else{
+        document.getElementById("image_categorie").style.display = null;
+    }
+}
+function imageCategorie(){
+    if(document.getElementById("image_categorie").value != ""){
+        document.getElementById("image_produit").style.display = "none";
+        document.getElementById("image_produit").value = null;
+    }else{
+        document.getElementById("image_produit").style.display = null;
+    }
+}
