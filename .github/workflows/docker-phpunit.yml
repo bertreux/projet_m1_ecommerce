@@ -15,9 +15,13 @@ jobs:
 
       - name: Build Docker image
         run: |
-          cd back/.docker/php;
-          docker build -t my-php-app -f Dockerfile .
+          cd back/.docker/php
+          docker build -t my-php-app --build-arg TIMEZONE=Europe/Paris -f Dockerfile .
+
+      - name: Install PHP dependencies
+        run: |
+          docker run --rm -v ${GITHUB_WORKSPACE}/back:/var/www/symfony -w /var/www/symfony my-php-app sh -c "composer install"
 
       - name: Run PHPUnit tests
         run: |
-          docker run --rm -v ${GITHUB_WORKSPACE}/back:/app -w /app my-php-app sh -c "php bin/phpunit"
+          docker run --rm -v ${GITHUB_WORKSPACE}/back:/var/www/symfony -w /var/www/symfony my-php-app sh -c "php bin/phpunit"
