@@ -15,7 +15,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t my-php-app -f back/.docker/php/Dockerfile .
+          cd back/.docker;
+          docker build -t my-php-app -f php/Dockerfile .
 
       - name: Run PHPUnit tests
         run: |
