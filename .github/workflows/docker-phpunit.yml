@@ -1,0 +1,22 @@
+name: Run PHPUnit tests
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t my-php-app -f back/.docker/php/Dockerfile .
+
+      - name: Run PHPUnit tests
+        run: |
+          docker run --rm -v ${GITHUB_WORKSPACE}/back:/app -w /app my-php-app sh -c "php bin/phpunit"
