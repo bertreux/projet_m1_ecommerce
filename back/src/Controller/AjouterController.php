@@ -7,6 +7,7 @@ use App\Back\Form\AjouterType;
 use App\Back\Repository\AjouterRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,7 +30,13 @@ class AjouterController extends BackAbstractController
         $form = $this->createForm(AjouterType::class, $ajouter);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted()) {
+            if($ajouter->getProduit()->getStock() < $form->getData()->getQte()){
+                $form->addError(new FormError('Stock insuffisant pour cette quantité.'));
+            }
+        }
         if ($form->isSubmitted() && $form->isValid()) {
+            $ajouter->getProduit()->setStock($ajouter->getProduit()->getStock() - $form->getData()->getQte());
             $this->entityManager->persist($ajouter);
             $this->entityManager->flush();
 
@@ -56,6 +63,11 @@ class AjouterController extends BackAbstractController
         $form = $this->createForm(AjouterType::class, $ajouter);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted()) {
+            if($ajouter->getProduit()->getStock() < $form->getData()->getQte()){
+                $form->addError(new FormError('Stock insuffisant pour cette quantité.'));
+            }
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
 
@@ -72,6 +84,9 @@ class AjouterController extends BackAbstractController
     public function delete(Request $request, Ajouter $ajouter): Response
     {
         if ($this->isCsrfTokenValid('delete'.$ajouter->getId(), $request->request->get('_token'))) {
+            $produit = $ajouter->getProduit();
+            $produit->setStock($produit->getStock() + $ajouter->getQte());
+            $this->produitRepository->save($produit, true);
             $this->entityManager->remove($ajouter);
             $this->entityManager->flush();
         }

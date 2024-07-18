@@ -18,10 +18,10 @@ class Categorie
     #[ORM\Column(length: 150)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class)]
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class, cascade: ["remove"])]
     private Collection $produits;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Image::class)]
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Image::class, cascade: ["remove"])]
     private Collection $images;
 
     public function __construct()

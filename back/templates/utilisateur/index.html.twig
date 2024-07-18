@@ -5,14 +5,17 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/e_commerce.js') }}"></script>
 {% endblock %}
 
 {% block body %}
     <h1>Utilisateur index</h1>
-
+    <input type="hidden" id="NomObjet" value="Utilisateur">
+    <input type="hidden" id="Url" value="{{ path('app_fetch_tableau') }}">
     <table class="table" id="myTable">
         <thead>
             <tr>
+                <td class="no-sort colloneTable"><input id="checkboxAll" type="checkbox" onchange="selectAll(this)"></td>
                 <th>Id</th>
                 <th>Nom</th>
                 <th>Prenom</th>
@@ -26,6 +29,7 @@
         <tbody>
         {% for utilisateur in utilisateurs %}
             <tr>
+                <td><input type="checkbox" onchange="selectOne()"></td>
                 <td>{{ utilisateur.id }}</td>
                 <td>{{ utilisateur.nom }}</td>
                 <td>{{ utilisateur.prenom }}</td>
@@ -43,4 +47,5 @@
     </table>
 
     <a href="{{ path('app_utilisateur_new') }}" class="btn btn-primary">Créer un nouveau</a>
+    <button id="btn-delete-row" style="display: none" onclick="deleteRows()" class="btn btn-danger">Supprimer</button>
 {% endblock %}

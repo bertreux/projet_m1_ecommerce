@@ -24,7 +24,7 @@ class Commande
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?Utilisateur $utilisateur = null;
 
-    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Ajouter::class)]
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Ajouter::class, cascade: ["remove"])]
     private Collection $ajouters;
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]
