@@ -125,6 +125,16 @@ class CRUDProduitTest extends PantherTestCase
         $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
         $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
         $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
 
         $this->takeScreenshot('tableau_clique_checkbox.png');
 
@@ -132,6 +142,16 @@ class CRUDProduitTest extends PantherTestCase
         $deleteRowButton = $crawler->filter('#btn-delete-row');
         $deleteRowButton->click();
 
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
         $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
         $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
         $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
