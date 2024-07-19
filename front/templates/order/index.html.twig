@@ -114,12 +114,12 @@
                         <div class="w-100 pt-1 ps-sm-4 product-info">
                             <h3 class="h5 mb-2"><a href="{{ path('shop_index',{id: item.product.id}) }}">{{ item.product.nom }}</a></h3>
                             <p>{{ item.product.description }}</p>
-                            <p>Quantité : x{{ item.quantity }} - Prix du produit: {{ (item.product.prix / 100)|number_format(2, ',', '.') }} €</p>
+                            <p>Quantité : x{{ item.quantity }} - Prix du produit: {{ (item.product.prix)|number_format(2, ',', '.') }} €</p>
                         </div>
                     </div>
                 {% endfor %}
                 <div class="order-summary">
-                    <p class="price">Total : {{ (total / 100)|number_format(2, ',', '.') }} €</p>
+                    <p class="price">Total : {{ (total)|number_format(2, ',', '.') }} €</p>
                 </div>
             </div>
         </div>

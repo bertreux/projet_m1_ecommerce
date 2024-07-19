@@ -118,26 +118,27 @@
     </div>
     <hr>
     <div class="order-summary">
-        <h2>Récapitulatif de votre commande <span class="text-muted">({{ commande.produits|length }} produits)</span></h2>
-        {% for produit in commande.produits %}
+        {% set nb_produits = 0 %}
+        {% for produit in commande.ajouters %}
+            {% set nb_produits = nb_produits + produit.qte %}
+        {% endfor %}
+        <h2>Récapitulatif de votre commande <span class="text-muted">({{ nb_produits }} produits)</span></h2>
+        {% for produit in commande.ajouters %}
             <div class="product-list d-flex align-items-center border-top py-4">
                 <a class="d-inline-block flex-shrink-0 bg-secondary rounded-1 p-sm-2 p-xl-3 mb-2 mb-sm-0" href="#">
-                    {% if produit.images[0].url is defined %}
-                        {% for img in produit.images %}
+                    {% if produit.produit.images[0].url is defined %}
+                        {% for img in produit.produit.images %}
                             {% if img.principal == 1 %}
-                                <img src="{{ asset(img.url) }}" alt="{{ produit.nom }}">
+                                <img src="{{ asset(img.url) }}" alt="{{ produit.produit.nom }}">
                             {% endif %}
                         {% endfor %}
                     {% endif %}
                 </a>
                 <div class="product-info w-100 pt-1 ps-sm-4">
-                    <h3 class="h5 mb-2"><a href="{{ path('shop_index', {id: produit.id}) }}">{{ produit.nom }}</a></h3>
-                    <p>{{ produit.description }}</p>
-                    {% for ajout in commande.ajouters %}
-                        {% if ajout.produit.id == produit.id %}
-                            <p class="mb-2">Quantité : {{ ajout.qte }}</p>
-                        {% endif %}
-                    {% endfor %}
+                    <h3 class="h5 mb-2"><a href="{{ path('shop_index', {id: produit.produit.id}) }}">{{ produit.produit.nom }}</a></h3>
+                    <p>{{ produit.produit.description }}</p>
+                        <p class="mb-2">Quantité : {{ produit.qte }}</p>
+                        <p class="mb-2">Prix : {{ (produit.produit.prix * produit.qte)|number_format(2, ',', '.') }}</p>
                 </div>
             </div>
         {% endfor %}
