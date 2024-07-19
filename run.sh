@@ -11,10 +11,10 @@ else
     docker run -d \
         --name mariadb_container \
         --network symfony_app \
-        -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
-        -e MYSQL_DATABASE="$MYSQL_DATABASE" \
-        -e MYSQL_USER="$MYSQL_USER" \
-        -e MYSQL_PASSWORD="$MYSQL_PASSWORD" \
+        -e MYSQL_ROOT_PASSWORD="symfony" \
+        -e MYSQL_DATABASE="app_db" \
+        -e MYSQL_USER="symfony" \
+        -e MYSQL_PASSWORD="symfony" \
         -v db_app:/var/lib/mysql \
         -p 3406:3306 \
         mariadb:10.4.32 --default-authentication-plugin=mysql_native_password
