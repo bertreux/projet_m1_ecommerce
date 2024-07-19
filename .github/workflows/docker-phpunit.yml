@@ -22,7 +22,7 @@ jobs:
 #        run: make docker_init
         run: |
           make docker;
-          docker container ls
+          docker ps
 
       - name: Run tests
         run: make test_back_docker
