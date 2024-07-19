@@ -2,6 +2,8 @@
 
 namespace App\Tests\e2e\Ajouter;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\Panther\PantherTestCase;
 
 // Il faut uniquement modifié remplir_formulaire(), edit_formulaire() et la propriété privé page
@@ -16,7 +18,13 @@ class CRUDAjouterTest extends PantherTestCase
 
     public function testCRUD(): void
     {
-        $this->client = static::createPantherClient();
+        if(getenv('PANTHER_URL') == 'localhost') {
+            $this->client = static::createPantherClient();
+        } else {
+            $this->client = static::createPantherClient(
+                ['external_base_uri' => getenv('PANTHER_URL')]
+            );
+        }
         $this->create();
         $this->show();
         $this->edit();
@@ -28,8 +36,8 @@ class CRUDAjouterTest extends PantherTestCase
         $this->selectOption('ajouter_date_year', '2023');
         $this->selectOption('ajouter_date_month', '7');
         $this->selectOption('ajouter_date_day', '17');
-        $this->selectOption('ajouter_produit', '365');
-        $this->selectOption('ajouter_commande', '2');
+        $this->selectOption('ajouter_produit', '1');
+        $this->selectOption('ajouter_commande', '1');
     }
 
     private function edit_formulaire($crawler) {

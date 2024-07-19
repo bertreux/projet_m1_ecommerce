@@ -2,6 +2,7 @@
 
 namespace App\Tests\fonctionnel;
 
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class AllUrlRunningTest extends WebTestCase
@@ -11,7 +12,15 @@ class AllUrlRunningTest extends WebTestCase
         $urls_to_not_test = [
             '/utilisateur/fetch/supprimer'
         ];
-        $client = static::createClient();
+        if(getenv('PANTHER_URL') == 'localhost') {
+            $client = static::createClient();
+        } else {
+            $client = static::createClient([], [
+                'base_uri' => getenv('PANTHER_URL'),
+            ]);
+        }
+
+
         $router = $this->getContainer()->get('router');
         $routes = $router->getRouteCollection();
 

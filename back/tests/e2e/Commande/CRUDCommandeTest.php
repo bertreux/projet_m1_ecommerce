@@ -16,7 +16,13 @@ class CRUDCommandeTest extends PantherTestCase
 
     public function testCRUD(): void
     {
-        $this->client = static::createPantherClient();
+        if(getenv('PANTHER_URL') == 'localhost') {
+            $this->client = static::createPantherClient();
+        } else {
+            $this->client = static::createPantherClient(
+                ['external_base_uri' => getenv('PANTHER_URL')]
+            );
+        }
         $this->create();
         $this->show();
         $this->edit();
@@ -26,8 +32,8 @@ class CRUDCommandeTest extends PantherTestCase
     private function remplir_formulaire($crawler) {
         $crawler->filter('#commande_statut')->sendKeys('test');
         $this->selectOption('commande_produits', '318');
-        $this->selectOption('commande_utilisateur', '38');
-        $this->selectOption('commande_adresse', '21');
+        $this->selectOption('commande_utilisateur', '1');
+        $this->selectOption('commande_adresse', '1');
     }
 
     private function edit_formulaire($crawler) {

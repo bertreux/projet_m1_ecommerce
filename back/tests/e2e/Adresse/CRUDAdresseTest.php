@@ -16,7 +16,13 @@ class CRUDAdresseTest extends PantherTestCase
 
     public function testCRUD(): void
     {
-        $this->client = static::createPantherClient();
+        if(getenv('PANTHER_URL') == 'localhost') {
+            $this->client = static::createPantherClient();
+        } else {
+            $this->client = static::createPantherClient(
+                ['external_base_uri' => getenv('PANTHER_URL')]
+            );
+        }
         $this->create();
         $this->show();
         $this->edit();
@@ -29,7 +35,7 @@ class CRUDAdresseTest extends PantherTestCase
         $crawler->filter('#adresse_region')->sendKeys('test');
         $crawler->filter('#adresse_code_postal')->sendKeys('99999');
         $crawler->filter('#adresse_pays')->sendKeys('test');
-        $this->selectOption('adresse_utilisateur', '38');
+        $this->selectOption('adresse_utilisateur', '1');
     }
 
     private function edit_formulaire($crawler) {

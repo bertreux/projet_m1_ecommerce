@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
     php:
+        container_name: front-php-1
         build:
             context: ./php
             args:
@@ -14,6 +15,7 @@ services:
             - symfony_app
 
     nginx:
+        container_name: front-nginx-1
         build:
             context: ./nginx
         volumes:
@@ -28,6 +30,7 @@ services:
             - .env.nginx.local
 
     mailpit:
+        container_name: front-mailpit-1
         image: axllent/mailpit
         ports:
             - "8026:8025"

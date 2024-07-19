@@ -17,7 +17,13 @@ class CRUDImageTest extends PantherTestCase
 
     public function testCRUD(): void
     {
-        $this->client = static::createPantherClient();
+        if(getenv('PANTHER_URL') == 'localhost') {
+            $this->client = static::createPantherClient();
+        } else {
+            $this->client = static::createPantherClient(
+                ['external_base_uri' => getenv('PANTHER_URL')]
+            );
+        }
         $this->create();
         $this->show();
         $this->edit();
@@ -29,7 +35,7 @@ class CRUDImageTest extends PantherTestCase
         $form = $crawler->filter('form')->form();
         $form['image[url]']->upload($filePath);
         $crawler->filter('#image_principal')->click();
-        $this->selectOption('image_produit', '318');
+        $this->selectOption('image_produit', '1');
     }
 
     private function edit_formulaire($crawler) {
@@ -107,6 +113,19 @@ class CRUDImageTest extends PantherTestCase
         $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
         $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
         $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
 
         $this->takeScreenshot('tableau_clique_checkbox.png');
 
@@ -114,6 +133,19 @@ class CRUDImageTest extends PantherTestCase
         $deleteRowButton = $crawler->filter('#btn-delete-row');
         $deleteRowButton->click();
 
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
         $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
         $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
         $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);

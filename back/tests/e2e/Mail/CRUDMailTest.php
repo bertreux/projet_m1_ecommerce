@@ -14,7 +14,13 @@ class CRUDMailTest extends PantherTestCase
 
     public function testCRUD(): void
     {
-        $this->client = static::createPantherClient();
+        if(getenv('PANTHER_URL') == 'localhost') {
+            $this->client = static::createPantherClient();
+        } else {
+            $this->client = static::createPantherClient(
+                ['external_base_uri' => getenv('PANTHER_URL')]
+            );
+        }
         $crawler = $this->client->request('GET', "/{$this->page}/");
         $firstTh = $crawler->filter('th')->first();
         $firstTh->click();

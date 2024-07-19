@@ -2,6 +2,7 @@
 
 namespace App\Tests\e2e\Produit;
 
+use Facebook\WebDriver\WebDriverKeys;
 use Symfony\Component\Panther\PantherTestCase;
 
 // Il faut uniquement modifié remplir_formulaire(), edit_formulaire() et la propriété privé page
@@ -16,7 +17,13 @@ class CRUDProduitTest extends PantherTestCase
 
     public function testCRUD(): void
     {
-        $this->client = static::createPantherClient();
+        if(getenv('PANTHER_URL') == 'localhost') {
+            $this->client = static::createPantherClient();
+        } else {
+            $this->client = static::createPantherClient(
+                ['external_base_uri' => getenv('PANTHER_URL')]
+            );
+        }
         $this->create();
         $this->show();
         $this->edit();
@@ -32,8 +39,8 @@ class CRUDProduitTest extends PantherTestCase
         $this->selectOption('produit_arriver_day', '2');
         $this->selectOption('produit_arriver_year', '2023');
         $crawler->filter('#produit_prioriter')->sendKeys('1');
-        $this->selectOption('produit_categorie', '36');
-        $this->selectOption('produit_commande', '2');
+        $this->selectOption('produit_categorie', '1');
+        $this->selectOption('produit_commande', '1');
     }
 
     private function edit_formulaire($crawler) {
@@ -108,12 +115,53 @@ class CRUDProduitTest extends PantherTestCase
         $deleteButton->click();
 
         $this->client->executeScript('window.scrollTo(0, document.body.scrollHeight);');
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
 
         $this->takeScreenshot('tableau_clique_checkbox.png');
 
         $this->client->waitFor('#btn-delete-row:enabled');
         $deleteRowButton = $crawler->filter('#btn-delete-row');
         $deleteRowButton->click();
+
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
 
         $crawler = $this->client->request('GET', "/{$this->page}/");
         $firstTh = $crawler->filter('th')->first();
