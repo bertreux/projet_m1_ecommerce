@@ -22,7 +22,7 @@ jobs:
         run: make docker_init
 
       - name: Run tests
-        run: make test_back_docker
+        run: make test_back_without_drop
 
       - name: Shut down services
         run: make docker

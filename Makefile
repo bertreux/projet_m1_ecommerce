@@ -48,6 +48,14 @@ test_front_docker: recreate_db_test_docker
 test_back: recreate_db_test
 	cd back && php bin/phpunit
 
+test_back_without_drop: recreate_db_test_docker_without_drop
+	cd back && php bin/phpunit
+
+recreate_db_test_docker_without_drop:
+	docker exec front-php-1 bash -c "php bin/console doctrine:database:create --env=test -n"
+	docker exec front-php-1 bash -c "php bin/console doctrine:migrations:migrate --env=test -n"
+	docker exec front-php-1 bash -c "php bin/console doctrine:fixtures:load --env=test -n"
+
 test_front: recreate_db_test
 	cd front && php bin/phpunit
 
