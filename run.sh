@@ -19,6 +19,6 @@ else
         -p 3406:3306 \
         mariadb:10.4.32 --default-authentication-plugin=mysql_native_password
 
-    docker-compose -f ./back/.docker/docker-compose.yml up -d
-    docker-compose -f ./front/.docker/docker-compose.yml up -d
+    docker-compose -f ./back/.docker/docker-compose.yml up --build -d
+    docker-compose -f ./front/.docker/docker-compose.yml up --build -d
 fi
