@@ -2,6 +2,7 @@
 
 namespace App\Tests\e2e\Utilisateur;
 
+use Facebook\WebDriver\WebDriverKeys;
 use Symfony\Component\Panther\PantherTestCase;
 
 // Il faut uniquement modifié remplir_formulaire(), edit_formulaire() et la propriété privé page
@@ -115,11 +116,33 @@ class CRUDUtilisateurTest extends PantherTestCase
 
         $this->client->executeScript('window.scrollTo(0, document.body.scrollHeight);');
 
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_DOWN);
+
         $this->takeScreenshot('tableau_clique_checkbox.png');
 
         $this->client->waitFor('#btn-delete-row:enabled');
         $deleteRowButton = $crawler->filter('#btn-delete-row');
         $deleteRowButton->click();
+
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
+        $this->client->getKeyboard()->pressKey(WebDriverKeys::PAGE_UP);
 
         $crawler = $this->client->request('GET', "/{$this->page}/");
         $firstTh = $crawler->filter('th')->first();
