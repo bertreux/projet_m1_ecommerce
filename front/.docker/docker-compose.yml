@@ -13,8 +13,6 @@ services:
             - symfony_app_vendor_front:/var/www/symfony/vendor
         networks:
             - symfony_app
-        depends_on:
-            - mariadb_container
 
     nginx:
         container_name: front-nginx-1
