@@ -49,7 +49,8 @@ test_back: recreate_db_test
 	cd back && php bin/phpunit
 
 test_back_without_drop: recreate_db_test_docker_without_drop
-	cd back && php bin/phpunit
+	docker exec back-php-1 bash -c "php bin/phpunit test/fonctionnel"
+	docker exec back-php-1 bash -c "php bin/phpunit test/e2e"
 
 recreate_db_test_docker_without_drop:
 	docker exec front-php-1 bash -c "php bin/console doctrine:database:create --env=test -n"
