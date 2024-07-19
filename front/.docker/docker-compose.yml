@@ -3,6 +3,7 @@ version: '3.8'
 services:
     php:
         container_name: front-php-1
+        tty: true
         build:
             context: ./php
             args:
@@ -16,6 +17,7 @@ services:
 
     nginx:
         container_name: front-nginx-1
+        tty: true
         build:
             context: ./nginx
         volumes:
@@ -31,6 +33,7 @@ services:
 
     mailpit:
         container_name: front-mail-1
+        tty: true
         image: axllent/mailpit
         ports:
             - "8026:8025"
