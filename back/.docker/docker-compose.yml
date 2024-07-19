@@ -3,7 +3,6 @@ version: '3.8'
 services:
     php:
         container_name: back-php-1
-        tty: true
         build:
             context: ./php
             args:
@@ -16,7 +15,6 @@ services:
             - symfony_app
 
     nginx:
-        tty: true
         container_name: back-nginx-1
         build:
             context: ./nginx

@@ -23,8 +23,8 @@ docker:
 docker_init: docker composer_docker create_database_docker
 
 composer_docker:
-	docker exec -it back-php-1 bash -c "composer install"
-	docker exec -it front-php-1 bash -c "composer install"
+	docker exec back-php-1 bash -c "composer install"
+	docker exec front-php-1 bash -c "composer install"
 
 recreate_db_test:
 	php front/bin/console doctrine:database:drop --env=test --force -n
@@ -33,17 +33,17 @@ recreate_db_test:
 	php front/bin/console doctrine:fixtures:load --env=test -n
 
 recreate_db_test_docker:
-	docker exec -it front-php-1 bash -c "php bin/console doctrine:database:drop --env=test --force -n"
-	docker exec -it front-php-1 bash -c "php bin/console doctrine:database:create --env=test -n"
-	docker exec -it front-php-1 bash -c "php bin/console doctrine:migrations:migrate --env=test -n"
-	docker exec -it front-php-1 bash -c "php bin/console doctrine:fixtures:load --env=test -n"
+	docker exec front-php-1 bash -c "php bin/console doctrine:database:drop --env=test --force -n"
+	docker exec front-php-1 bash -c "php bin/console doctrine:database:create --env=test -n"
+	docker exec front-php-1 bash -c "php bin/console doctrine:migrations:migrate --env=test -n"
+	docker exec front-php-1 bash -c "php bin/console doctrine:fixtures:load --env=test -n"
 
 test_back_docker: recreate_db_test_docker
-	docker exec -it back-php-1 bash -c "php bin/phpunit tests/fonctionnel"
-	docker exec -it back-php-1 bash -c "php bin/phpunit tests/e2e"
+	docker exec back-php-1 bash -c "php bin/phpunit tests/fonctionnel"
+	docker exec back-php-1 bash -c "php bin/phpunit tests/e2e"
 
 test_front_docker: recreate_db_test_docker
-	docker exec -it front-php-1 bash -c "php bin/phpunit"
+	docker exec front-php-1 bash -c "php bin/phpunit"
 
 test_back: recreate_db_test
 	cd back && php bin/phpunit
@@ -54,6 +54,6 @@ test_front: recreate_db_test
 test: test_back test_front
 
 create_database_docker:
-	docker exec -it front-php-1 bash -c "php bin/console d:m:m -n"
+	docker exec front-php-1 bash -c "php bin/console d:m:m -n"
 	docker cp ./bdd/e-commerce-data.sql mariadb_container:/home/e-commerce-data.sql
-	docker exec -i mariadb_container bash -c "mysql -usymfony -psymfony app_db < /home/e-commerce-data.sql"
+	docker exec mariadb_container bash -c "mysql -usymfony -psymfony app_db < /home/e-commerce-data.sql"
