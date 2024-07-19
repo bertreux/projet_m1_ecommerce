@@ -45,5 +45,15 @@ docker-compose -f ./front/.docker/docker-compose.yml up --build -d
 # Wait for MariaDB to be ready
 echo "Waiting for MariaDB to be ready..."
 until docker exec mariadb_container mysqladmin ping --silent; do
+  docker run -d \
+    --name mariadb_container \
+    --network symfony_app \
+    -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
+    -e MYSQL_DATABASE="$MYSQL_DATABASE" \
+    -e MYSQL_USER="$MYSQL_USER" \
+    -e MYSQL_PASSWORD="$MYSQL_PASSWORD" \
+    -v db_app:/var/lib/mysql \
+    -p 3406:3306 \
+    mariadb:10.4.32 --default-authentication-plugin=mysql_native_password
   sleep 1
 done
